@@ -1,9 +1,11 @@
-<script>
-  import { RouterView } from "vue-router";
+<script setup>
+import { RouterView } from 'vue-router'
+import Navi from './components/Navi.vue'
 </script>
 
 <template>
-  <div>
-    <RouterView />
-  </div>
+    <div>
+        <Navi />
+        <RouterView />
+    </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
     <div>
-        <h1>Welcome Home!</h1>
+        <h1>404 Page not Found</h1>
     </div>
 </template>
