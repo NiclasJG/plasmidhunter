@@ -11,6 +11,7 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
+    "igv": "^2.15.12",
     "vue": "^3.4.29",
     "vue-router": "^4.4.0"
   },
