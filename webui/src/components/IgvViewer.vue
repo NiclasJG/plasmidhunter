@@ -3,6 +3,7 @@
         <div ref="root">
             <p>Blank browser to demonstrate loading igv sessions and files from html links. See igv-links.html</p>
         </div>
+        <button @click="refreshIgv">Test</button>
     </div>
 </template>
 
@@ -12,10 +13,10 @@ import igv from 'igv'
 
 import { ref, onMounted } from 'vue'
 
-//const root = ref(null)
-//onMounted(() => console.log(root.value.outerHTML))
 const root = ref(null)
-const test = ref()
+
+// Receive data from parent component (JobView.vue)
+const plasmids = defineProps(['data'])
 
 const options = {
     reference: {
@@ -34,19 +35,24 @@ const options = {
         ],
     },
 }
-
+// Create IGV-Viewer at start
 onMounted(() => {
+    setupIgv(options)
+})
+
+// Initialize IGV-Viewer
+function setupIgv(options) {
     igv.createBrowser(root.value, options).then(function (browser) {
         console.log('Browser ready')
         igv.browser = browser
     })
-})
+}
 
-/* onMounted(() => {
-    root.value.focus()
-})
-
-test.value = root.value
- */
-console.log(igv)
+// Update IGV-Viewer
+function refreshIgv() {
+    const newgenome = {
+        genome: 'hg19',
+    }
+    igv.browser.loadGenome(newgenome)
+}
 </script>
