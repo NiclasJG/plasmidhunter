@@ -1,7 +1,9 @@
 <template>
     <div>
         <h1>Jobs</h1>
-        <IgvViewer />
+        <Suspense>
+            <IgvViewer />
+        </Suspense>
     </div>
 </template>
 
