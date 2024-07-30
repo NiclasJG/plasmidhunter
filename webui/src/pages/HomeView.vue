@@ -23,7 +23,7 @@
                 />
             </div>
             <div class="col align-self-right">
-                <button @click="printTest" type="button" class="btn btn-secondary">Submit</button>
+                <button @click="submit" type="button" class="btn btn-secondary">Submit</button>
             </div>
         </div>
     </div>
@@ -32,20 +32,35 @@
 <script setup>
 import { ref } from 'vue'
 
-const input = ref('')
-const filename = ref()
-
-//manage file
+const input = ref()
+// const filename = ref()
 const file = ref()
+
+const plasmidData = {
+    name: '',
+    sequenz: '',
+}
+let fileUpload = false
 
 function uploadFile(event) {
     file.value = event.target.files[0]
     const reader = new FileReader()
-    reader.onload = (e) => (filename.value = e.target.result)
+    reader.onload = (e) => (file.value = e.target.result)
     reader.readAsText(file.value)
+    fileUpload = true
 }
 
-function printTest() {
-    console.log(filename.value)
+function submit() {
+    if (!fileUpload && typeof input.value !== 'undefined') {
+        plasmidData.name = input.value.split('\n')[0]
+        plasmidData.sequenz = input.value.substring(input.value.indexOf('\n') + 1).replace(/\n/g, '')
+        // plasmidData.sequenz = plasmidData.sequenz.trim().replace(/\n/g, '')
+        console.log(plasmidData)
+    } else if (fileUpload && typeof input.value === 'undefined') {
+        plasmidData.name = file.value.split('\n')[0]
+        plasmidData.sequenz = file.value.substring(file.value.indexOf('\n') + 1).replace(/\n/g, '')
+        // plasmidData.sequenz = plasmidData.sequenz.trim().replace(/\n/g, '')
+        console.log(plasmidData)
+    }
 }
 </script>

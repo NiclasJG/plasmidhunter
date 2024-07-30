@@ -1,8 +1,6 @@
 <template>
     <div>
-        <div ref="root">
-            <p>Blank browser to demonstrate loading igv sessions and files from html links. See igv-links.html</p>
-        </div>
+        <div ref="root"></div>
         <button @click="refreshIgv">Test</button>
     </div>
 </template>
@@ -12,82 +10,62 @@
 import { reference } from '@popperjs/core'
 import igv from 'igv'
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, toRaw, watchEffect, watch } from 'vue'
 
 const root = ref(null)
 
-// const test = await fetch('./metagenome_testset.json')
-// .then((response) => response.json())
-// .then((json) => (dataset = json))
-// const testdata = test.json
-// const dataset = await test.json()
-// console.log(dataset)
-
-const fasta = await fetch('./plasmid.fna').then((response) => response.text())
-//     .then((text) => (testfasta = text))
-// console.log(testfasta)
-const fastablob = new Blob([fasta], { type: 'text/plain' })
-const fastaUrl = URL.createObjectURL(fastablob)
-console.log(fastaUrl)
-
 // Receive data from parent component (JobView.vue)
-const plasmids = defineProps(['data'])
+const props = defineProps({
+    data: Object,
+})
+
+const dataset = props.data
+// console.log(dataset.plasmid_name)
+
+//Load Plasmid and create URL
+// const plasmid_fasta = await fetch('./plasmid.fna').then((response) => response.text())
+const plasmid_fasta = dataset['plasmid_name'] + '\n' + dataset['plasmid_seq']
+const fastablob = new Blob([plasmid_fasta], { type: 'text/plain' })
+const fastaUrl = URL.createObjectURL(fastablob)
+
+//test chromosome
+// const chrom = 'NC_002119.1'
+// Extract chromosome name from plasmid name (first word without ">")
+const chrom = dataset.plasmid_name.split(' ')[0].substr(1)
+
+// Create Tracks and features out of results
+function createTracks(results, chromosome) {
+    const tracks = []
+    results.forEach((element) => {
+        const features = createFeatures(element['contigs'], chromosome)
+        tracks.push({
+            name: element.dataset,
+            type: 'annotation',
+            features: features,
+        })
+    })
+    return tracks
+}
+
+function createFeatures(contigs, chromosome) {
+    const features = []
+    contigs.forEach((element) => {
+        features.push({
+            chr: chromosome,
+            start: element['plasmid start'],
+            end: element['plasmid end'],
+            color: 'rgb(100,0,0)',
+        })
+    })
+    return features
+}
 
 const options = {
     reference: {
-        id: 'test234', //not necessary
+        //id: 'test234', //not necessary
         fastaURL: fastaUrl,
         indexed: false,
-        tracks: [
-            {
-                name: 'Plasmid',
-                type: 'annotation',
-                displayMode: 'EXPANDED',
-                features: [
-                    {
-                        chr: 'NC_002119.1',
-                        start: 1,
-                        end: 1000,
-                        locus: 'test',
-                        color: 'rgb(100,0,0)',
-                    },
-                    {
-                        chr: 'NC_002119.1',
-                        start: 1500,
-                        end: 3500,
-                        locus: 'test',
-                        color: 'rgb(200,0,0)',
-                    },
-                ],
-            },
-            {
-                name: 'Plasmid2',
-                type: 'annotation',
-                features: [
-                    {
-                        chr: 'NC_002119.1',
-                        start: 500,
-                        end: 2500,
-                        locus: 'test',
-                        color: 'rgb(100,0,0)',
-                    },
-                    {
-                        chr: 'NC_002119.1',
-                        start: 2000,
-                        end: 4000,
-                        locus: 'test2',
-                        color: 'rgb(200,0,0)',
-                    },
-                    {
-                        chr: 'NC_002119.1',
-                        start: 6000,
-                        end: 8700,
-                        locus: 'test3',
-                        color: 'rgb(200,0,0)',
-                    },
-                ],
-            },
-        ],
+        tracks: createTracks(dataset['hits'], chrom),
         wholeGenomeView: false,
     },
 

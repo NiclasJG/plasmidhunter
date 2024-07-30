@@ -4,8 +4,10 @@ import Navi from './components/Navi.vue'
 </script>
 
 <template>
-    <div>
-        <Navi />
-        <RouterView />
-    </div>
+    <Suspense>
+        <div>
+            <Navi />
+            <RouterView />
+        </div>
+    </Suspense>
 </template>
