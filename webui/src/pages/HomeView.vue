@@ -10,6 +10,7 @@
                 placeholder="Insert Plasmid here."
                 name="DNA_Input"
                 id="sequenzInput"
+                style="height: 20vh"
             ></textarea>
         </div>
         <div class="row">
@@ -23,13 +24,13 @@
                 />
             </div>
             <div class="col align-self-right">
-                <button @click="submit" type="button" class="btn btn-secondary">Submit</button>
+                <button @click="submit" type="button" class="btn btn-secondary" style="width: 20vh">Submit</button>
             </div>
         </div>
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 
 const input = ref()
@@ -37,8 +38,8 @@ const input = ref()
 const file = ref()
 
 const plasmidData = {
-    name: '',
-    sequenz: '',
+    name: String,
+    sequenz: String,
 }
 let fileUpload = false
 

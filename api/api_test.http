@@ -1,0 +1,8 @@
+@host = http://127.0.0.1:1235
+
+###
+POST {{host}}/
+Content-Type: application/json
+
+name:   test
+seq:    ATATTATA

@@ -1,50 +1,89 @@
 <template>
     <div>
         <div ref="root"></div>
-        <button @click="refreshIgv">Test</button>
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 //@ts-ignore
-import { reference } from '@popperjs/core'
+import { Obj, reference } from '@popperjs/core'
 import igv from 'igv'
 
-import { ref, onMounted, toRaw, watchEffect, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const root = ref(null)
 
-// Receive data from parent component (JobView.vue)
-const props = defineProps({
-    data: Object,
-})
+interface resultData {
+    plasmid_name: string
+    plasmid_seq: string
+    hits: Array<{
+        dataset: string
+        geolocation: {
+            location: string
+            longitude: string
+            latitude: string
+        }
+        seqMethod: string
+        sampleOrigin: string
+        collectionDate: string
+        biosample: string
+        mgnifySample: string
+        contigs: Array<contig>
+    }>
+}
 
-const dataset = props.data
-// console.log(dataset.plasmid_name)
+interface contig {
+    plasmid: string
+    contig: string
+    contigstart: string
+    contigend: string
+    contiglength: string
+    coverage: string
+    identity: string
+    alignmentlength: string
+    strand: string
+    plasmidstart: string
+    plasmidend: string
+    plasmidlength: string
+}
+
+// Receive data from parent component (JobView.vue)
+const props = defineProps<{
+    data: resultData
+}>()
+// console.log(props.data.hits[0].contigs[0])
 
 //Load Plasmid and create URL
 // const plasmid_fasta = await fetch('./plasmid.fna').then((response) => response.text())
-const plasmid_fasta = dataset['plasmid_name'] + '\n' + dataset['plasmid_seq']
+const plasmid_fasta = props.data['plasmid_name'] + '\n' + props.data['plasmid_seq']
 const fastablob = new Blob([plasmid_fasta], { type: 'text/plain' })
 const fastaUrl = URL.createObjectURL(fastablob)
 
 //test chromosome
-// const chrom = 'NC_002119.1'
+// let chrom: String = 'NC_002119.1'
+let chrom: String
 // Extract chromosome name from plasmid name (first word without ">")
-const chrom = dataset.plasmid_name.split(' ')[0].substr(1)
-
+if (typeof props.data !== 'undefined') {
+    chrom = props.data.plasmid_name.split(' ')[0].substr(1)
+}
 // Create Tracks and features out of results
 function createTracks(results, chromosome) {
-    const tracks = []
-    results.forEach((element) => {
-        const features = createFeatures(element['contigs'], chromosome)
-        tracks.push({
-            name: element.dataset,
-            type: 'annotation',
-            features: features,
+    const tracksArray = []
+
+    try {
+        results.forEach((element) => {
+            const features = createFeatures(element['contigs'], chromosome)
+            tracksArray.push({
+                //without ts element.props.data worked
+                name: element.dataset,
+                type: 'annotation',
+                features: features,
+            })
         })
-    })
-    return tracks
+    } catch (err) {
+        console.log('Couldnt create Tracks!!', err)
+    }
+    return tracksArray
 }
 
 function createFeatures(contigs, chromosome) {
@@ -65,7 +104,8 @@ const options = {
         //id: 'test234', //not necessary
         fastaURL: fastaUrl,
         indexed: false,
-        tracks: createTracks(dataset['hits'], chrom),
+        // Add error function with empty tracks
+        tracks: createTracks(props.data.hits, chrom),
         wholeGenomeView: false,
     },
 
@@ -74,7 +114,9 @@ const options = {
 
 // Create IGV-Viewer at start
 onMounted(() => {
-    setupIgv(options)
+    if (typeof props.data !== 'undefined') {
+        setupIgv(options)
+    }
 })
 
 // Initialize IGV-Viewer
