@@ -32,15 +32,17 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { postJob } from '@/helpers/fetch_helper'
 
 const input = ref()
 // const filename = ref()
 const file = ref()
 
-const plasmidData = {
-    name: String,
-    sequenz: String,
+interface plasmidData {
+    name: string
+    sequenz: string
 }
+
 let fileUpload = false
 
 function uploadFile(event) {
@@ -51,17 +53,41 @@ function uploadFile(event) {
     fileUpload = true
 }
 
-function submit() {
+async function submit() {
+    let plasmidData: plasmidData
+
     if (!fileUpload && typeof input.value !== 'undefined') {
         plasmidData.name = input.value.split('\n')[0]
         plasmidData.sequenz = input.value.substring(input.value.indexOf('\n') + 1).replace(/\n/g, '')
-        // plasmidData.sequenz = plasmidData.sequenz.trim().replace(/\n/g, '')
-        console.log(plasmidData)
     } else if (fileUpload && typeof input.value === 'undefined') {
         plasmidData.name = file.value.split('\n')[0]
         plasmidData.sequenz = file.value.substring(file.value.indexOf('\n') + 1).replace(/\n/g, '')
-        // plasmidData.sequenz = plasmidData.sequenz.trim().replace(/\n/g, '')
+
         console.log(plasmidData)
     }
+
+    // console.log(requestCreateJob.body)
+    // await fetch('http://127.0.0.1:1238/')
+    //     .then((response) => response.text())
+    //     .then((data) => console.log(data))
+
+    postJob(plasmidData.name, plasmidData.sequenz)
 }
+
+// async function fetchData() {
+//     const requestCreateJob = {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+//         body: JSON.stringify({ plasmid_name: plasmidData.name, dna_sequenz: plasmidData.sequenz }),
+//     }
+
+//     await fetch('http://127.0.0.1:1239/', requestCreateJob)
+//         .then((response) => response.json())
+//         .then((data) => (responseData = data))
+//         .catch((error) => {
+//             console.error('Test:', error)
+//         })
+
+//     saveJob(responseData.job)
+// }
 </script>

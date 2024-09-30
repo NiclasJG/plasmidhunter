@@ -1,163 +1,74 @@
-use std::{collections::HashMap, sync::Arc};
+use std::sync::Arc;
 
+use api_model::PlasmidHunterModel;
 use axum::{
-    extract::{Path, State}, http::StatusCode, response::IntoResponse, routing::{get}, Json, Router
+    extract::{Path, State}, http::StatusCode, response::IntoResponse, routing::get, Error, Json, Router
 };
 
-use serde::{Deserialize, Serialize};
-
 use tokio::net::TcpListener;
-use tokio::sync::RwLock;
 
-use uuid::Uuid;
-use rand::distributions::{Alphanumeric, DistString};
-use chrono::Utc;
-use chrono::DateTime;
+use tower_http::{cors::CorsLayer, trace::TraceLayer};
+
+// use crate::api_model::ph_db;
+mod api_structs;
+mod api_handler;
+mod api_model;
+mod argo {
+    pub mod client;
+    mod urls;
+}
 
 
 #[tokio::main]
-async fn main() {
-    // let server_address = "http://localhost:5170";
-    let server_address = "127.0.0.1:1235";
-    let db = ph_db().await;
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // let server_address = "http://localhost:5176";
+    let server_address = "127.0.0.1:1239";
+    // let db = ph_db().await;
 
     let listener = TcpListener::bind(server_address)
     .await
     .expect("Couldnt create TCP listener");
+    // let plasmidhunter_handler = Arc::new(PlasmidHunterModel::new().await);
 
-    // let plasmidhunter_handler = Arc::new(PlasmidHunterHandler::new().await);
+    let plasmid_hunter_model = Arc::new(PlasmidHunterModel::new(
+        dotenvy::var("ARGO_TOKEN")?,
+        dotenvy::var("ARGO_URL")?,
+        dotenvy::var("ARGO_NAMESPACE")?,
+        dotenvy::var("S3_ACCESS_KEY")?,
+        dotenvy::var("S3_SECRET_KEY")?,
+        dotenvy::var("S3_BUCKET")?,
+        dotenvy::var("S3_ENDPOINT")?,
+        dotenvy::var("BAKTA_VERSION")?,
+        dotenvy::var("DATABASE_VERSION")?,
+        dotenvy::var("BACKEND_VERSION")?,
+    ).await,);
 
     println!("listening on {}", listener.local_addr().unwrap());
 
-    let app = Router::new().route("/", get(|| async {"Helllo"}).post(create_job))
+    let app = Router::new().route("/", get(|| async {"Helllo"}).post(api_handler::create_job))
         .route("/jobs", get(|| async {"Helllo"}))
         .route("/job/:id", get(|| async {"Helllo"}))
         .route("/about", get(|| async {"Helllo"}))
-        .with_state(db);
+        .with_state(plasmid_hunter_model)
+        .layer(CorsLayer::very_permissive())
+        .layer(TraceLayer::new_for_http()
+            .on_response(())
+            .on_body_chunk(())
+            .on_eos(()));
 
     axum::serve(listener, app)
         .await
         .expect("Error serving application");
-}
-#[derive(Debug)]
-pub struct StateHandler {
-    pub job_state: RwLock<HashMap<Uuid, FullJobState>>,
-    //pub argo_client: Arc<ArgoClient>,
-}
-#[derive(Debug)]
-pub struct FullJobState {
-    pub api_status: Option<JobStatus>,
-    // pub workflowname: Option<String>,
-    pub secret: String,
-    pub name: String,
-}
-
-pub struct PlasmidHunterHandler{
-    //pub s3_handler: S3Handler,
-    pub state_handler: Arc<StateHandler>, 
-}
-
-pub type DB = Arc<PlasmidHunterHandler>;
-
-pub async  fn ph_db() -> DB {
-    Arc::new(PlasmidHunterHandler::new().await)
-}
-
-impl StateHandler{
-    pub async fn create_job(&self, name: String, dna_sequenz: String) -> (Uuid, String) {
-        // add name trim?
-
-        let job_id = Uuid::new_v4();
-        let secret = Alphanumeric.sample_string(&mut rand::thread_rng(), 32);
-
-        self.job_state.write().await.insert(
-            job_id,
-            FullJobState {
-                api_status: None,
-                secret: secret.clone(),
-                name: name.to_string(),
-            },
-        );
-        
-       
-        println!("{:?}", self.job_state);
-
-        (job_id, secret)
-    }
-}
-
-impl PlasmidHunterHandler {
-    pub async fn new(
-
-    ) -> Self {
-        let state_handler = Arc::new(StateHandler {
-            job_state: RwLock::new(HashMap::new())
-        });
-
-        // let state_handler_clone =state_handler.clone();
-        // state_handler_clone.run().await;
-
-        PlasmidHunterHandler{
-            state_handler,
-        }
-    }
-}
-
-
-#[derive(Debug, Deserialize, Serialize, Clone)]
-pub struct Job{
-    pub id: Uuid,
-    pub secret: String
-
-}
-
-#[derive(Debug, Deserialize, Serialize, Clone)]
-pub struct JobRequest {
-    plasmid_name: String,
-    dna_sequenz: String
-}
-
-#[derive(Debug, Deserialize, Serialize, Clone)]
-pub struct JobResponse{
-    pub job: Job,
-}
-
-#[derive(Debug, Deserialize, Serialize, Clone)]
-pub struct ListRequest {
-    pub jobs: Vec<Job>,
-}
-
-#[derive(Debug, Deserialize, Serialize, Clone)]
-pub struct ListRespone {
-    pub jobs: Vec<JobStatus>,
-}
-
-#[derive(Debug, Deserialize, Serialize, Clone)]
-pub struct JobStatus {
-    pub id: Uuid,
-    pub status: String,
-    pub started: DateTime<Utc>,
-    pub updated: DateTime<Utc>,
-    pub name: String,
-}
-
-#[derive(Debug, Deserialize, Serialize, Clone)]
-pub struct ResultResponse {
-    pub id: Uuid,
-    pub started: DateTime<Utc>,
-    pub updated: DateTime<Utc>,
-    pub name: String,
-    pub data: String,
+    Ok(())
 }
 
 
 
-async fn create_job(
-    State(state): State<DB>,
-    Json(job_request): Json<JobRequest>
-)-> impl IntoResponse {
-    let (id, secrect) = state.state_handler.create_job(job_request.plasmid_name, job_request.dna_sequenz).await;
 
 
-}
+
+
+
+
+
 

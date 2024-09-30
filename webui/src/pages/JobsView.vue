@@ -20,9 +20,16 @@
             </tbody>
         </table>
     </div>
+    <div><button v-on:click="test"></button></div>
 </template>
 
 <script setup lang="ts">
+import { getJobs } from '@/helpers/storagehelper'
+
+function test() {
+    console.log(getJobs())
+}
+
 const jobs = [
     {
         jobID: 1,

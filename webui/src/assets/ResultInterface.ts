@@ -1,22 +1,33 @@
-interface resultData {
-    plasmid_name: String
-    plasmid_seq: String
-    hits: Array<{ dataset: String; contigs: Array<contig> }>
-}
-
-interface contig {
-    plasmid: String
-    contig: String
-    contigstart: String
-    contigend: String
-    contiglength: String
-    coverage: String
-    identity: String
-    alignmentlength: String
-    strand: String
-    plasmidstart: String
-    plasmidend: String
-    plasmidlength: String
-}
-
-export { resultData }
+ export interface resultData {
+        plasmid_name: string
+        plasmid_seq: string
+        hits: Array<{
+            dataset: string
+            geolocation: {
+                location: string
+                longitude: string
+                latitude: string
+            }
+            seqMethod: string
+            sampleOrigin: string
+            collectionDate: string
+            biosample: string
+            mgnifySample: string
+            contigs: Array<contig>
+        }>
+    }
+    
+    interface contig {
+        plasmid: string
+        contig: string
+        contigstart: string
+        contigend: string
+        contiglength: string
+        coverage: string
+        identity: string
+        alignmentlength: string
+        strand: string
+        plasmidstart: string
+        plasmidend: string
+        plasmidlength: string
+    }

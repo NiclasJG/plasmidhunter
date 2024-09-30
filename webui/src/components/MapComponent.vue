@@ -6,6 +6,8 @@
 import { onMounted, ref } from 'vue'
 import L from 'leaflet'
 
+import { resultData } from '@/assets/ResultInterface'
+
 const map = ref()
 const mapContainer = ref()
 
@@ -58,39 +60,5 @@ function setInitialMarker() {
     }
 
     // var marker = L.marker([51.5, -0.09]).addTo(map.value)
-}
-
-interface resultData {
-    plasmid_name: string
-    plasmid_seq: string
-    hits: Array<{
-        dataset: string
-        geolocation: {
-            location: string
-            longitude: string
-            latitude: string
-        }
-        seqMethod: string
-        sampleOrigin: string
-        collectionDate: string
-        biosample: string
-        mgnifySample: string
-        contigs: Array<contig>
-    }>
-}
-
-interface contig {
-    plasmid: string
-    contig: string
-    contigstart: string
-    contigend: string
-    contiglength: string
-    coverage: string
-    identity: string
-    alignmentlength: string
-    strand: string
-    plasmidstart: string
-    plasmidend: string
-    plasmidlength: string
 }
 </script>

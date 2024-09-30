@@ -11,6 +11,10 @@
                 <h3>Histogram</h3>
                 <Histogram :dataChart="fetchData" />
             </div>
+            <!-- <div class="col">
+                <h3>Timeline</h3>
+                <TimelineComponent />
+            </div> -->
         </div>
         <div class="row">
             <h3>Data Table</h3>
@@ -77,44 +81,11 @@ import IgvViewer from '@/components/IgvViewer.vue'
 import Map from '@/components/MapComponent.vue'
 import Histogram from '@/components/HistogramComponent.vue'
 import { ref } from 'vue'
+import TimelineComponent from '@/components/TimelineComponent.vue'
+import { resultData } from '@/assets/ResultInterface'
 // import { resultData } from '@/assets/ResultInterface'
 
 const MapRef = ref<InstanceType<typeof Map | null>>(null)
-// const MapRef = ref<HTMLDivElement>()
-
-interface resultData {
-    plasmid_name: string
-    plasmid_seq: string
-    hits: Array<{
-        dataset: string
-        geolocation: {
-            location: string
-            longitude: string
-            latitude: string
-        }
-        seqMethod: string
-        sampleOrigin: string
-        collectionDate: string
-        biosample: string
-        mgnifySample: string
-        contigs: Array<contig>
-    }>
-}
-
-interface contig {
-    plasmid: string
-    contig: string
-    contigstart: string
-    contigend: string
-    contiglength: string
-    coverage: string
-    identity: string
-    alignmentlength: string
-    strand: string
-    plasmidstart: string
-    plasmidend: string
-    plasmidlength: string
-}
 
 const fetchData = ref<resultData>()
 //fetch local file (./metagenome.. loads 'http://localhost:5173/job/metagenome_testset.json' )
@@ -129,23 +100,4 @@ fetchData.value.hits.sort((a, b) => {
 })
 </script>
 
-<style>
-/* .table-responsive {
-    max-height: 20vh;
-}
-
-.column {
-    float: left;
-}
-
-.left {
-    float: left;
-    width: 50%;
-}
-
-.right {
-    float: right;
-    position: center;
-    width: 50%;
-} */
-</style>
+<style></style>
