@@ -43,9 +43,9 @@ pub struct JobStatus {
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct ResultResponse {
-    pub id: Uuid,
-    pub started: DateTime<Utc>,
-    pub updated: DateTime<Utc>,
+    // pub id: Uuid,
+    // pub started: DateTime<Utc>,
+    // pub updated: DateTime<Utc>,
     pub name: String,
     pub data: String,
 }

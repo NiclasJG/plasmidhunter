@@ -1,0 +1,361 @@
+{
+    "items": [
+        {
+            "metadata": {
+                "annotations": {
+                    "workflows.argoproj.io/pod-name-format": "v2"
+                },
+                "creationTimestamp": "2024-11-05T11:31:00Z",
+                "generateName": "testworkflow-",
+                "generation": 3,
+                "labels": {
+                    "workflows.argoproj.io/completed": "true",
+                    "workflows.argoproj.io/creator": "system-serviceaccount-argo-scheduler",
+                    "workflows.argoproj.io/phase": "Succeeded",
+                    "workflows.argoproj.io/workflow-template": "testworkflow"
+                },
+                "managedFields": [
+                    {
+                        "apiVersion": "argoproj.io/v1alpha1",
+                        "fieldsType": "FieldsV1",
+                        "fieldsV1": {
+                            "f:metadata": {
+                                "f:generateName": {},
+                                "f:labels": {
+                                    ".": {},
+                                    "f:workflows.argoproj.io/creator": {},
+                                    "f:workflows.argoproj.io/workflow-template": {}
+                                }
+                            },
+                            "f:spec": {}
+                        },
+                        "manager": "argo",
+                        "operation": "Update",
+                        "time": "2024-11-05T11:31:00Z"
+                    },
+                    {
+                        "apiVersion": "argoproj.io/v1alpha1",
+                        "fieldsType": "FieldsV1",
+                        "fieldsV1": {
+                            "f:metadata": {
+                                "f:annotations": {
+                                    ".": {},
+                                    "f:workflows.argoproj.io/pod-name-format": {}
+                                },
+                                "f:labels": {
+                                    "f:workflows.argoproj.io/completed": {},
+                                    "f:workflows.argoproj.io/phase": {}
+                                }
+                            },
+                            "f:status": {}
+                        },
+                        "manager": "workflow-controller",
+                        "operation": "Update",
+                        "time": "2024-11-05T11:31:10Z"
+                    }
+                ],
+                "name": "testworkflow-twh69",
+                "namespace": "argo",
+                "resourceVersion": "61697672",
+                "uid": "cdc4a6b0-77c2-4440-8d57-19803943e8bf"
+            },
+            "spec": {
+                "arguments": {
+                    "parameters": [
+                        {
+                            "name": "parameter",
+                            "value": "\u003eCP021637.1 Unidentified plasmid plasmid apr34_001180F, complete sequence"
+                        },
+                        {
+                            "name": "jobid",
+                            "value": "8e6b7344-e0cb-4210-8091-1b3988fbe500"
+                        }
+                    ]
+                },
+                "workflowTemplateRef": {
+                    "name": "testworkflow"
+                }
+            },
+            "status": {
+                "artifactGCStatus": {
+                    "notSpecified": true
+                },
+                "artifactRepositoryRef": {
+                    "artifactRepository": {
+                        "s3": {
+                            "accessKeySecret": {
+                                "key": "accesskey",
+                                "name": "s3cred"
+                            },
+                            "bucket": "plasmidhuntertest",
+                            "endpoint": "s3.computational.bio.uni-giessen.de",
+                            "secretKeySecret": {
+                                "key": "secretkey",
+                                "name": "s3cred"
+                            }
+                        }
+                    },
+                    "configMap": "artifact-repositories",
+                    "key": "giessen",
+                    "namespace": "argo"
+                },
+                "conditions": [
+                    {
+                        "status": "False",
+                        "type": "PodRunning"
+                    },
+                    {
+                        "status": "True",
+                        "type": "Completed"
+                    }
+                ],
+                "estimatedDuration": 10,
+                "finishedAt": "2024-11-05T11:31:10Z",
+                "nodes": {
+                    "testworkflow-twh69": {
+                        "displayName": "testworkflow-twh69",
+                        "estimatedDuration": 3,
+                        "finishedAt": "2024-11-05T11:31:03Z",
+                        "hostNodeName": "uxjhgxqcrd-worker-z2khmh-9fcb875c9-w7l88",
+                        "id": "testworkflow-twh69",
+                        "inputs": {
+                            "artifacts": [
+                                {
+                                    "name": "inputdata",
+                                    "path": "/data/plasmid.fasta",
+                                    "s3": {
+                                        "key": "jobs/8e6b7344-e0cb-4210-8091-1b3988fbe500/input/plasmid.fasta"
+                                    }
+                                },
+                                {
+                                    "name": "baktadummy",
+                                    "path": "/data/baktadummy.json",
+                                    "s3": {
+                                        "key": "tests/baktadummy.json"
+                                    }
+                                },
+                                {
+                                    "name": "metadummy",
+                                    "path": "/data/metadummy.json",
+                                    "s3": {
+                                        "key": "tests/metadummy.json"
+                                    }
+                                }
+                            ],
+                            "parameters": [
+                                {
+                                    "name": "parameter",
+                                    "value": "\u003eCP021637.1 Unidentified plasmid plasmid apr34_001180F, complete sequence"
+                                },
+                                {
+                                    "name": "jobid",
+                                    "value": "8e6b7344-e0cb-4210-8091-1b3988fbe500"
+                                }
+                            ]
+                        },
+                        "name": "testworkflow-twh69",
+                        "outputs": {
+                            "artifacts": [
+                                {
+                                    "archive": {
+                                        "none": {}
+                                    },
+                                    "name": "bakta-results",
+                                    "path": "/data/result.json",
+                                    "s3": {
+                                        "key": "jobs/8e6b7344-e0cb-4210-8091-1b3988fbe500/result/result.json"
+                                    }
+                                }
+                            ],
+                            "exitCode": "0"
+                        },
+                        "phase": "Succeeded",
+                        "progress": "1/1",
+                        "resourcesDuration": {
+                            "cpu": 2,
+                            "memory": 21
+                        },
+                        "startedAt": "2024-11-05T11:31:00Z",
+                        "templateName": "bakta",
+                        "templateScope": "local/",
+                        "type": "Pod"
+                    }
+                },
+                "phase": "Succeeded",
+                "progress": "1/1",
+                "resourcesDuration": {
+                    "cpu": 2,
+                    "memory": 21
+                },
+                "startedAt": "2024-11-05T11:31:00Z",
+                "storedTemplates": {
+                    "namespaced/testworkflow/bakta": {
+                        "inputs": {
+                            "artifacts": [
+                                {
+                                    "name": "inputdata",
+                                    "path": "/data/plasmid.fasta",
+                                    "s3": {
+                                        "key": "jobs/{{inputs.parameters.jobid}}/input/plasmid.fasta"
+                                    }
+                                },
+                                {
+                                    "name": "baktadummy",
+                                    "path": "/data/baktadummy.json",
+                                    "s3": {
+                                        "key": "tests/baktadummy.json"
+                                    }
+                                },
+                                {
+                                    "name": "metadummy",
+                                    "path": "/data/metadummy.json",
+                                    "s3": {
+                                        "key": "tests/metadummy.json"
+                                    }
+                                }
+                            ],
+                            "parameters": [
+                                {
+                                    "name": "parameter"
+                                },
+                                {
+                                    "name": "jobid"
+                                }
+                            ]
+                        },
+                        "metadata": {},
+                        "name": "bakta",
+                        "outputs": {
+                            "artifacts": [
+                                {
+                                    "archive": {
+                                        "none": {}
+                                    },
+                                    "name": "bakta-results",
+                                    "path": "/data/result.json",
+                                    "s3": {
+                                        "key": "jobs/{{inputs.parameters.jobid}}/result/result.json"
+                                    }
+                                }
+                            ]
+                        },
+                        "script": {
+                            "command": [
+                                "python"
+                            ],
+                            "image": "python:alpine3.19",
+                            "name": "",
+                            "resources": {
+                                "requests": {
+                                    "cpu": "2",
+                                    "memory": "2Gi"
+                                }
+                            },
+                            "source": "import json\n\ndata = {}\n\nwith open('/data/baktadummy.json') as bakta:\n    data[\"annotation\"] = json.load(bakta)\n\nwith open('/data/metadummy.json') as meta:\n    metadata = json.load(meta)\n    hits = []\n    for x in range(3):\n        hits.append(metadata)\n    data[\"hits\"] = hits\n\nwith open('/data/result.json', 'w') as file:\n    json.dump(data, file)\nprint(\"Wrote data successfully\")\n"
+                        }
+                    }
+                },
+                "storedWorkflowTemplateSpec": {
+                    "arguments": {
+                        "parameters": [
+                            {
+                                "name": "parameter",
+                                "value": "\u003eCP021637.1 Unidentified plasmid plasmid apr34_001180F, complete sequence"
+                            },
+                            {
+                                "name": "jobid",
+                                "value": "8e6b7344-e0cb-4210-8091-1b3988fbe500"
+                            }
+                        ]
+                    },
+                    "entrypoint": "bakta",
+                    "podGC": {
+                        "strategy": "OnWorkflowSuccess"
+                    },
+                    "serviceAccountName": "argo",
+                    "templates": [
+                        {
+                            "inputs": {
+                                "artifacts": [
+                                    {
+                                        "name": "inputdata",
+                                        "path": "/data/plasmid.fasta",
+                                        "s3": {
+                                            "key": "jobs/{{inputs.parameters.jobid}}/input/plasmid.fasta"
+                                        }
+                                    },
+                                    {
+                                        "name": "baktadummy",
+                                        "path": "/data/baktadummy.json",
+                                        "s3": {
+                                            "key": "tests/baktadummy.json"
+                                        }
+                                    },
+                                    {
+                                        "name": "metadummy",
+                                        "path": "/data/metadummy.json",
+                                        "s3": {
+                                            "key": "tests/metadummy.json"
+                                        }
+                                    }
+                                ],
+                                "parameters": [
+                                    {
+                                        "name": "parameter"
+                                    },
+                                    {
+                                        "name": "jobid"
+                                    }
+                                ]
+                            },
+                            "metadata": {},
+                            "name": "bakta",
+                            "outputs": {
+                                "artifacts": [
+                                    {
+                                        "archive": {
+                                            "none": {}
+                                        },
+                                        "name": "bakta-results",
+                                        "path": "/data/result.json",
+                                        "s3": {
+                                            "key": "jobs/{{inputs.parameters.jobid}}/result/result.json"
+                                        }
+                                    }
+                                ]
+                            },
+                            "script": {
+                                "command": [
+                                    "python"
+                                ],
+                                "image": "python:alpine3.19",
+                                "name": "",
+                                "resources": {
+                                    "requests": {
+                                        "cpu": "2",
+                                        "memory": "2Gi"
+                                    }
+                                },
+                                "source": "import json\n\ndata = {}\n\nwith open('/data/baktadummy.json') as bakta:\n    data[\"annotation\"] = json.load(bakta)\n\nwith open('/data/metadummy.json') as meta:\n    metadata = json.load(meta)\n    hits = []\n    for x in range(3):\n        hits.append(metadata)\n    data[\"hits\"] = hits\n\nwith open('/data/result.json', 'w') as file:\n    json.dump(data, file)\nprint(\"Wrote data successfully\")\n"
+                            }
+                        }
+                    ],
+                    "workflowTemplateRef": {
+                        "name": "testworkflow"
+                    }
+                },
+                "taskResultsCompletionStatus": {
+                    "testworkflow-twh69": true
+                }
+            }
+        }
+    ],
+    "metadata": {
+        "resourceVersion": "64466372"
+    }
+}
+
+
+
+
+
