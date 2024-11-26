@@ -8,9 +8,10 @@
 //@ts-ignore
 import { Obj, reference } from '@popperjs/core'
 import igv from 'igv'
-import { resultData } from '@/assets/ResultInterface'
+import { resultData } from '@/helpers/ResultInterface'
 
 import { ref, onMounted } from 'vue'
+import { elements } from 'chart.js'
 
 // Receive data from parent component (JobView.vue)
 const props = defineProps<{
@@ -22,21 +23,21 @@ const root = ref(null)
 let chrom: String
 // let chrom: String = 'NC_002119.1'
 
-// Extract chromosome name from plasmid name (first word without ">")
+// Extract chromosome name from plasmid name
 if (typeof props.data !== 'undefined') {
-    chrom = props.data.plasmid_name.split(' ')[0].substr(1)
+    chrom = props.data.annotation.sequences[0].orig_description.split(' ')[0]
 }
 
 const options = {
+    // genome: chrom,
     reference: {
         //id: 'test234', //not necessary
         fastaURL: createFastaUrl(),
         indexed: false,
         // Add error function with empty tracks
-        tracks: createTracks(props.data.hits, chrom),
+        tracks: createTracks(props.data.annotation, props.data.hits, chrom),
         wholeGenomeView: false,
     },
-
     loadDefaultGenomes: false,
 }
 
@@ -65,23 +66,41 @@ function refreshIgv() {
 
 function createFastaUrl() {
     //Load Plasmid and create URL
-    const plasmid_fasta = props.data['plasmid_name'] + '\n' + props.data['plasmid_seq']
+    const plasmid_fasta =
+        '>' + props.data.annotation.sequences[0].orig_description + '\n' + props.data.annotation.sequences[0].sequence
     const fastablob = new Blob([plasmid_fasta], { type: 'text/plain' })
     const fastaUrl = URL.createObjectURL(fastablob)
-
     return fastaUrl
 }
 
 // Create Tracks and features out of results
-function createTracks(results, chromosome) {
+function createTracks(annotation, results, chromosome) {
     const tracksArray = []
 
+    const annotationTrack = {
+        // name: 'Annotation',
+        type: 'annotation',
+        features: [],
+    }
+
+    annotation.features.forEach((e) => {
+        annotationTrack.features.push({
+            chr: chromosome,
+            name: e.product,
+            start: e.start,
+            end: e.stop,
+            color: 'rgb(100,0,0)',
+        })
+    })
+
+    tracksArray.push(annotationTrack)
+    console.log(tracksArray)
     try {
         results.forEach((element) => {
-            const features = createFeatures(element['contigs'], chromosome)
+            const features = createFeatures(element.contigs, chromosome)
             tracksArray.push({
                 //without ts element.props.data worked
-                name: element.dataset,
+                name: element['sample-alias'],
                 type: 'annotation',
                 features: features,
             })
@@ -89,17 +108,21 @@ function createTracks(results, chromosome) {
     } catch (err) {
         console.log('Couldnt create Tracks!!', err)
     }
+
     return tracksArray
 }
 
 function createFeatures(contigs, chromosome) {
     const features = []
+
     contigs.forEach((element) => {
         features.push({
+            //chr must be same named as shown right from igv symbol in browser
             chr: chromosome,
             start: element['plasmid start'],
             end: element['plasmid end'],
-            color: 'rgb(100,0,0)',
+            color: 'rgb(200,0,0)',
+            row: 1,
         })
     })
     return features

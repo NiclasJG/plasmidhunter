@@ -6,7 +6,7 @@
 import { onMounted, ref } from 'vue'
 import L from 'leaflet'
 
-import { resultData } from '@/assets/ResultInterface'
+import { resultData } from '@/helpers/ResultInterface'
 
 const map = ref()
 const mapContainer = ref()
@@ -28,7 +28,7 @@ function createMap() {
             [90, 200],
         ],
         maxBoundsViscosity: 0.9,
-    }).setView([51, -0.09], 2)
+    }).setView([65, -0.09], 2)
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         minZoom: 1,
         maxZoom: 19,
@@ -49,10 +49,7 @@ function setInitialMarker() {
         props.data.hits.forEach((element) => {
             // console.log(element.geolocation.location)
             try {
-                var marker = L.marker([
-                    parseFloat(element.geolocation.latitude),
-                    parseFloat(element.geolocation.longitude),
-                ]).addTo(map.value)
+                var marker = L.marker([parseFloat(element.latitude), parseFloat(element.longitude)]).addTo(map.value)
             } catch {
                 console.log('Location not available or found.')
             }

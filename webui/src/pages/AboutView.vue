@@ -1,29 +1,30 @@
 <template>
     <div>
         <h1>About!!!</h1>
-        <!-- <TimelineComponent /> -->
+        <!-- <TimelineComponent style="height: 499px; width: 500px" /> -->
         <div id="app">
-            <vue-timeline :data="events" style="height: 499px; width: 500px"></vue-timeline>
+            <!-- <VueTimeline :data="events"></VueTimeline> -->
+            <TimelineComponent :data="events" />
         </div>
     </div>
 </template>
 
 <script>
 import TimelineComponent from '@/components/TimelineComponent.vue'
-import VueTimeline from 'vue-timeline-component'
+// import VueTimeline from 'vue-timeline-component'
 
 export default {
     name: 'App',
-    component: {
-        VueTimeline,
+    components: {
+        TimelineComponent,
     },
     data() {
         return {
             events: [
                 {
                     name: 'event 1',
-                    start: new Date(2020, 1, 1),
-                    end: new Date(2020, 1, 4),
+                    start: new Date(2010, 1, 1),
+                    end: new Date(2010, 1, 1),
                 },
                 {
                     name: 'event 2',
