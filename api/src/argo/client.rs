@@ -80,7 +80,7 @@ pub struct WorkflowStatus {
     pub finishedAt: Option<chrono::DateTime<Utc>>,
     pub startedAt: Option<chrono::DateTime<Utc>>,
     pub phase: String,
-    pub estimatedDuration: Option<String>
+    pub estimatedDuration: Option<i128>
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
@@ -153,7 +153,7 @@ impl ArgoClient {
                                     .json::<WorkflowsList>()
                                     .await?;
                                     
-        println!("First Result: {:?}", json!(response));
+        // println!("First Result: {:?}", json!(response));
         Ok(response)
         // Ok(())
     }

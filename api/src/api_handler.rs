@@ -56,6 +56,10 @@ pub async fn get_job_list(
     State(state): State<Arc<PlasmidHunterModel>>,
     Json(list_request): Json<ListRequest>,
 ) -> impl IntoResponse {
+    let state_handler: Arc<StateHandler> = state.state_handler.clone();
+    let test2 = state_handler.update_jobs().await;
+
+    println!("{:?}", test2);
     let response= Json(state.state_handler.get_jobs(list_request.jobs).await);
 
     response.into_response()

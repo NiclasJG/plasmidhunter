@@ -1,11 +1,12 @@
 use std::{collections::HashMap, sync::Arc};
 
-use chrono::Utc;
+use chrono::{DateTime, Utc};
+use serde::de::value;
 use tokio::sync::RwLock;
 use reqwest::header::CONTENT_TYPE;
 use anyhow::{Ok, Result};
 
-use uuid::Uuid;
+use uuid::{uuid, Uuid};
 use rand::distributions::{Alphanumeric, DistString};
 
 use crate::api_structs::*;
@@ -39,8 +40,98 @@ pub struct PlasmidHunterModel{
 // }
 
 impl StateHandler{
-    async fn run(self: Arc<Self>) {
+    pub async fn update_jobs(&self) -> Result<()> {
+        
 
+        let job_list = self.argo_client.get_workflows().await.unwrap();
+        let mut job_state_list = self.job_state.write().await;
+        println!("test1");
+        // let job_list_iter = job_list.items.iter();
+        for job in job_list.items {
+            let mut jobid = Uuid::new_v4();
+            let mut name = String::new();
+            for param in job.spec.arguments.parameters {
+                if param.name == "jobid" {
+                    // crashes if value cant be parsed
+                    println!("{:?}", param.value);
+                    jobid = Uuid::parse_str(&param.value).unwrap();
+                    println!("{:?}{:?}", jobid, param.value);
+                } 
+                if param.name == "parameter" {
+                    name = String::from(param.value)
+                }
+            }
+            
+
+            let job_full_state = job_state_list.get(&jobid);
+
+            if job_full_state.is_some() {
+                let full_state = job_full_state.unwrap().clone();
+                let api_status = full_state.api_status.unwrap().clone();
+                // if job.status.phase == "Succeeded" {
+                //     let mut api_status = full_state.api_status.unwrap();
+                //     api_status.status = job.status.phase;
+                //     api_status.updated = job.status.finishedAt.unwrap();
+                // }
+                println!("test4.1");
+                if job.status.phase == "Succeeded" {
+                    let full_job_state = FullJobState {
+                        api_status: Some(JobStatus {
+                            id: api_status.id,
+                            status: job.status.phase,
+                            started: api_status.started,
+                            updated: job.status.finishedAt.unwrap(),
+                            name: api_status.name,
+                        }), 
+                        workflowname: full_state.workflowname, 
+                        secret: full_state.secret,
+                        name: full_state.name,
+                    };
+
+                    job_state_list.insert(jobid.clone(), full_job_state);
+                    println!("test5.1");
+                } else {
+                    let full_job_state = FullJobState {
+                        api_status: Some(JobStatus {
+                            id: api_status.id,
+                            status: api_status.status,
+                            started: api_status.started,
+                            updated: Utc::now(),
+                            name: api_status.name,
+                        }), 
+                        workflowname: full_state.workflowname, 
+                        secret: full_state.secret,
+                        name: full_state.name,
+                    };
+
+                    job_state_list.insert(jobid.clone(), full_job_state);
+                    println!("test6.1");
+                }
+            } else {
+                let full_job_state = FullJobState {
+                    api_status: Some(JobStatus {
+                        id: jobid.clone(),
+                        status: job.status.phase,
+                        started: job.status.startedAt.unwrap(),
+                        updated: Utc::now(),
+                        name: name.clone(),
+                    }), 
+                    workflowname: Some(job.metadata.name.clone()), 
+                    secret: job.metadata.name.clone(),
+                    name: name.clone(),
+                };
+                job_state_list.insert(jobid.clone(), full_job_state);
+                // let full_job_state2 = test.get_mut(&jobid).unwrap();
+                // full_job_state2 = full_job_state;
+                // println!("test7.122");
+                // full_job_state2.api_status = full_job_state.api_status;
+                // full_job_state2.workflowname = full_job_state.workflowname;
+                // full_job_state2.secret = full_job_state.secret;
+                // full_job_state2.name = full_job_state.name;
+                println!("test7.2");
+            }
+        }
+        Ok(())
     } 
 
     pub async fn create_job(&self, name: &String) -> (Uuid, String) { //, sequenz: &String, s3_post_url: &String
@@ -58,23 +149,6 @@ impl StateHandler{
                 name: name.to_string(),
             },
         );
-        
-
-        // let mut map = HashMap::new();
-        // map.insert("name:", &name);
-        // map.insert("dna_sequenz", &sequenz);
-        
-    
-        // let pname = name;
-        // let dsequenz = sequenz;
-    
-        // let client = self.argo_client.client;
-        // let res = client.put(s3_post_url)
-        //                                         .header(CONTENT_TYPE, "text/plain")
-        //                                         .body(format!("{pname}\n{dsequenz}").to_string())
-        //                                         // .json(&map)
-        //                                         .send().await;
-        // println!("{:?}", self.job_state);
 
         (job_id, secret)
     }
@@ -116,6 +190,7 @@ impl StateHandler{
         full_job_state.api_status = Some(job_status);
         full_job_state.workflowname = Some(argo_response.metadata.name);
 
+        drop(write_state);
 
         Ok(())
         // println!("{:?}", test)
@@ -135,7 +210,6 @@ impl StateHandler{
                 //secret check
                 jobs.push(job_api_status.unwrap().api_status.as_ref().unwrap().clone())
             }
-            
             
         };
         
@@ -179,7 +253,7 @@ impl PlasmidHunterModel {
         });
 
         let state_handler_clone = state_handler.clone();
-        state_handler_clone.run().await;
+        // state_handler_clone.update_jobs().await;
 
         let s3_handler = S3Handler::new().await;
 
