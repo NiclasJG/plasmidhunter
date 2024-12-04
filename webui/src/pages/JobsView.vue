@@ -13,15 +13,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in jobs.jobs">
-                    <th>{{ item.id }}</th>
-                    <th>{{ item.name }}</th>
-                    <th>{{ item.status }}</th>
-                    <th v-if="item.status === 'Succeeded'">
+                <tr v-for="item in jobs.jobs.slice().reverse()">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.status }}</td>
+                    <td v-if="item.status === 'Succeeded'">
                         <router-link :to="{ name: 'job', params: { id: item.id } }"> Results </router-link>
-                    </th>
-                    <th>{{ new Date(item.started).toLocaleString() }}</th>
-                    <th>{{ new Date(item.updated).toLocaleString() }}</th>
+                    </td>
+                    <td v-else>None</td>
+                    <td>{{ new Date(item.started).toLocaleString() }}</td>
+                    <td>{{ new Date(item.updated).toLocaleString() }}</td>
                 </tr>
             </tbody>
         </table>
@@ -36,14 +37,30 @@ import { onMounted, ref } from 'vue'
 import { getJobList } from '@/helpers/fetch_helper'
 import { responseJobList } from '@/helpers/Interface'
 
-let jobs: responseJobList
+// let jobs: responseJobList
+
+const jobs = ref<responseJobList>()
 
 const loaded = ref(false)
 
 onMounted(async () => {
-    jobs = await getJobList()
-    loaded.value = true
+    initJobList()
+    updateJobList()
 })
+
+// callJobList()
+async function initJobList() {
+    jobs.value = await getJobList()
+    loaded.value = true
+}
+
+function updateJobList() {
+    setInterval(async () => {
+        jobs.value = await getJobList()
+        loaded.value = true
+    }, 20000)
+}
+// loaded.value = true
 
 // console.log(jobs)
 // function test() {

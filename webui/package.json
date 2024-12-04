@@ -21,6 +21,7 @@
     "vue": "^3.4.29",
     "vue-chartjs": "^5.3.1",
     "vue-router": "^4.4.0",
+    "vue-timeline-chart": "^2.5.0",
     "vue-timeline-component": "^0.1.6"
   },
   "devDependencies": {

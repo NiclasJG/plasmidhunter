@@ -25,14 +25,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     //load .env for s3 variables
     dotenvy::dotenv()?;
 
-    // let server_address = "http://localhost:5176";
     let server_address = "127.0.0.1:1239";
-    // let db = ph_db().await;
     
     let listener = TcpListener::bind(server_address)
     .await
     .expect("Couldnt create TCP listener");
-    // let plasmidhunter_handler = Arc::new(PlasmidHunterModel::new().await);
 
     let plasmid_hunter_model = Arc::new(PlasmidHunterModel::new(
         dotenvy::var("ARGO_TOKEN")?,
@@ -46,7 +43,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("listening on {}", listener.local_addr().unwrap());
 
     let app = Router::new().route("/", get(|| async {"Helllo"}).post(api_handler::create_job))
-        .route("/api/v1/job/init", get(||async{"Hello"}))
+        // .route("/api/v1/job/init", get(||async{"Hello"}))
         .route("/api/v1/job/list", post(api_handler::get_job_list))
         .route("/api/v1/job/result", post(api_handler::get_job_result))
         // .route("/about", get(|| async {"Helllo"}))

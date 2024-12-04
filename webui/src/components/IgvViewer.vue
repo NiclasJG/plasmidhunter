@@ -97,6 +97,7 @@ function createTracks(annotation, results, chromosome) {
     console.log(tracksArray)
     try {
         results.forEach((element) => {
+            console.log(element)
             const features = createFeatures(element.contigs, chromosome)
             tracksArray.push({
                 //without ts element.props.data worked

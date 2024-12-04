@@ -45,7 +45,7 @@ impl StateHandler{
 
         let job_list = self.argo_client.get_workflows().await.unwrap();
         let mut job_state_list = self.job_state.write().await;
-        println!("test1");
+        // println!("test1");
         // let job_list_iter = job_list.items.iter();
         for job in job_list.items {
             let mut jobid = Uuid::new_v4();
@@ -53,9 +53,9 @@ impl StateHandler{
             for param in job.spec.arguments.parameters {
                 if param.name == "jobid" {
                     // crashes if value cant be parsed
-                    println!("{:?}", param.value);
+                    // println!("{:?}", param.value);
                     jobid = Uuid::parse_str(&param.value).unwrap();
-                    println!("{:?}{:?}", jobid, param.value);
+                    // println!("{:?}{:?}", jobid, param.value);
                 } 
                 if param.name == "parameter" {
                     name = String::from(param.value)
@@ -73,7 +73,9 @@ impl StateHandler{
                 //     api_status.status = job.status.phase;
                 //     api_status.updated = job.status.finishedAt.unwrap();
                 // }
-                println!("test4.1");
+                // println!("test4.1");
+
+                // just update status and updated?
                 if job.status.phase == "Succeeded" {
                     let full_job_state = FullJobState {
                         api_status: Some(JobStatus {
@@ -89,8 +91,9 @@ impl StateHandler{
                     };
 
                     job_state_list.insert(jobid.clone(), full_job_state);
-                    println!("test5.1");
+                    // println!("test5.1");
                 } else {
+                    //just update updated?
                     let full_job_state = FullJobState {
                         api_status: Some(JobStatus {
                             id: api_status.id,
@@ -105,7 +108,7 @@ impl StateHandler{
                     };
 
                     job_state_list.insert(jobid.clone(), full_job_state);
-                    println!("test6.1");
+                    // println!("test6.1");
                 }
             } else {
                 let full_job_state = FullJobState {
@@ -128,7 +131,7 @@ impl StateHandler{
                 // full_job_state2.workflowname = full_job_state.workflowname;
                 // full_job_state2.secret = full_job_state.secret;
                 // full_job_state2.name = full_job_state.name;
-                println!("test7.2");
+                // println!("test7.2");
             }
         }
         Ok(())

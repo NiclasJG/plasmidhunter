@@ -2,7 +2,7 @@
     <div class="container fluid text-center">
         <div><h1>Single Job</h1></div>
         <div v-if="loaded">
-            <div class="row">
+            <div class="row" style="height: 30vh">
                 <div class="col">
                     <h3>Locations</h3>
                     <Map ref="MapRef" :data="fetchData" />
@@ -10,8 +10,11 @@
                 <div class="col">
                     <h3>Timeline</h3>
                     <TimelineComponent :dateList="fetchData" />
-                    <!-- <TimelineComponent /> -->
                 </div>
+                <!-- <div class="col">
+                    <h3>Timeline</h3>
+                    <NewTimelineComponent :data="fetchData" />
+                </div> -->
             </div>
             <div class="row">
                 <h3>Data Table</h3>
@@ -79,6 +82,7 @@
 import IgvViewer from '@/components/IgvViewer.vue'
 import Map from '@/components/MapComponent.vue'
 import TimelineComponent from '@/components/TimelineComponent.vue'
+import NewTimelineComponent from '@/components/NewTimelineComponent.vue'
 
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
@@ -91,13 +95,15 @@ const route = useRoute()
 const loaded = ref(false)
 
 const fetchData = ref<resultData>()
+
+// let fetchData: resultData
 // fetch local file (./metagenome.. loads 'http://localhost:5173/job/metagenome_testset.json' )
 // await fetch('http://localhost:5173/result.json')
 //     .then((response) => response.json())
 //     .then((data) => (fetchData.value = data))
 //     .catch((error) => console.log(error))
-// })
-
+// // })
+// loaded.value = true
 // beforeRouteEnter (to, from, next) {
 
 onMounted(async () => {
@@ -105,12 +111,13 @@ onMounted(async () => {
     console.log(job)
     fetchData.value = await getJobResult(job)
     loaded.value = true
+    console.log(fetchData.value)
 })
 
 // fetchData.value.hits.sort((a, b) => {
 //     return Number(new Date(a['collection-date'])) - Number(new Date(b['collection-date']))
 // })
-//
+// //
 </script>
 
 <style></style>
