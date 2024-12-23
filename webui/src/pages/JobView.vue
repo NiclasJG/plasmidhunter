@@ -2,19 +2,26 @@
     <div class="container fluid text-center">
         <div><h1>Single Job</h1></div>
         <div v-if="loaded">
-            <div class="row" style="height: 30vh">
+            <div class="row" style="height: 400px">
                 <div class="col">
                     <h3>Locations</h3>
                     <Map ref="MapRef" :data="fetchData" />
                 </div>
-                <div class="col">
+                <!--      <div class="col">
                     <h3>Timeline</h3>
                     <TimelineComponent :dateList="fetchData" />
-                </div>
+                </div> -->
                 <!-- <div class="col">
                     <h3>Timeline</h3>
                     <NewTimelineComponent :data="fetchData" />
                 </div> -->
+                <!-- <div class="col">
+                    <h3>Timeline</h3>
+                    <timelinetest :data="fetchData" />
+                </div> -->
+                <div class="col">
+                    <histogramcomp :data="fetchData" />
+                </div>
             </div>
             <div class="row">
                 <h3>Data Table</h3>
@@ -22,19 +29,19 @@
                     <thead>
                         <tr>
                             <!-- <th>ID</th> -->
-                            <th>Name</th>
+                            <th>Accession</th>
                             <th>Location</th>
-                            <th>Method</th>
-                            <th>Sample Origin</th>
                             <th>Collection Date</th>
+                            <th>Description</th>
+                            <th>Sample Origin</th>
                             <th>BioSample</th>
                             <th>Mgnify</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in fetchData.hits">
-                            <th>{{ item['sample-alias'] }}</th>
-                            <th>
+                            <td>{{ item.accession }}</td>
+                            <td>
                                 <button
                                     @click="
                                         MapRef.centerMarker(
@@ -46,26 +53,28 @@
                                     {{ item['geo-loc-name'] }}
                                     <!-- sample-metadata: "geographic location (country and/or sea,region)" -->
                                 </button>
-                            </th>
-                            <!--     <th>{{ item.seqMethod }}</th> -->
-                            <th>{{ item['environment-biome'] }}</th>
-                            <th>{{ item['collection-date'] }}</th>
-                            <th>
+                            </td>
+                            <td>{{ item['collection-date'] }}</td>
+
+                            <td>{{ item['sample-desc'] }}</td>
+                            <!--       <td>{{ item.seqMethod }}</td> -->
+                            <td>{{ item['environment-biome'] }}</td>
+                            <td>
                                 <a
                                     :href="'https://www.ebi.ac.uk/biosamples/samples/' + item.biosample"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     >BioSample</a
                                 >
-                            </th>
-                            <th>
+                            </td>
+                            <td>
                                 <a
                                     :href="'https://www.ebi.ac.uk/metagenomics/samples/' + item.accession"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     >MGnify</a
                                 >
-                            </th>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -83,6 +92,8 @@ import IgvViewer from '@/components/IgvViewer.vue'
 import Map from '@/components/MapComponent.vue'
 import TimelineComponent from '@/components/TimelineComponent.vue'
 import NewTimelineComponent from '@/components/NewTimelineComponent.vue'
+import timelinetest from '@/components/timelinetest.vue'
+import histogramcomp from '@/components/HistogramComponent.vue'
 
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
@@ -96,28 +107,25 @@ const loaded = ref(false)
 
 const fetchData = ref<resultData>()
 
-// let fetchData: resultData
-// fetch local file (./metagenome.. loads 'http://localhost:5173/job/metagenome_testset.json' )
-// await fetch('http://localhost:5173/result.json')
-//     .then((response) => response.json())
-//     .then((data) => (fetchData.value = data))
-//     .catch((error) => console.log(error))
-// // })
-// loaded.value = true
-// beforeRouteEnter (to, from, next) {
+await fetch('http://localhost:5173/result.json')
+    .then((response) => response.json())
+    .then((data) => (fetchData.value = data))
+    .catch((error) => console.log(error))
+loaded.value = true
 
-onMounted(async () => {
-    let job = getSingleJob(route.params.id.toLocaleString())
-    console.log(job)
-    fetchData.value = await getJobResult(job)
-    loaded.value = true
-    console.log(fetchData.value)
-})
+// onMounted(async () => {
+//     let job = getSingleJob(route.params.id.toLocaleString())
+//     console.log(job)
+//     fetchData.value = await getJobResult(job)
+//     loaded.value = true
+//     console.log(fetchData.value)
+// })
+
+// console.log(new Date('Oct-13-2010'))
 
 // fetchData.value.hits.sort((a, b) => {
 //     return Number(new Date(a['collection-date'])) - Number(new Date(b['collection-date']))
 // })
-// //
 </script>
 
 <style></style>

@@ -90,24 +90,23 @@ interface metaData{
     }>
     "sample-name": string,
     species: string,
-    contigs: Array<contig>,
+    contigs: Array<contig>
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+interface contig {
+    plasmid: string
+    contig: string
+    "contig start": string
+    "contig end": string
+    "contig length": string
+    "coverage[%]": string
+    "identity[%]": string
+    "alignment length": string
+    strand: string
+    "plasmid start": string
+    "plasmid end": string
+    "plasmid length": string
+}
 
 
 
@@ -131,17 +130,3 @@ interface metaData{
         }>
     } */
     
-    interface contig {
-        plasmid: string
-        contig: string
-        "contig start": string
-        "contig end": string
-        "contig length": string
-        "coverage[%]": string
-        "identity[%]": string
-        "alignment length": string
-        strand: string
-        "plasmid start": string
-        "plasmid end": string
-        "plasmid length": string
-    }

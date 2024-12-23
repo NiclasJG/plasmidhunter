@@ -97,12 +97,12 @@ function createTracks(annotation, results, chromosome) {
     console.log(tracksArray)
     try {
         results.forEach((element) => {
-            console.log(element)
+            // console.log(element)
             const features = createFeatures(element.contigs, chromosome)
             tracksArray.push({
-                //without ts element.props.data worked
-                name: element['sample-alias'],
+                name: element.accession,
                 type: 'annotation',
+                displayMode: 'expanded',
                 features: features,
             })
         })
@@ -115,7 +115,7 @@ function createTracks(annotation, results, chromosome) {
 
 function createFeatures(contigs, chromosome) {
     const features = []
-
+    // console.log(contigs)
     contigs.forEach((element) => {
         features.push({
             //chr must be same named as shown right from igv symbol in browser
@@ -123,7 +123,7 @@ function createFeatures(contigs, chromosome) {
             start: element['plasmid start'],
             end: element['plasmid end'],
             color: 'rgb(200,0,0)',
-            row: 1,
+            row: 0,
         })
     })
     return features

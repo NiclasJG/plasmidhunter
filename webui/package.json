@@ -18,11 +18,11 @@
     "igv": "^2.15.12",
     "leaflet": "^1.9.4",
     "typescript": "^5.5.4",
+    "vega": "^5.30.0",
+    "vega-embed": "^6.29.0",
+    "vega-lite": "^5.23.0",
     "vue": "^3.4.29",
-    "vue-chartjs": "^5.3.1",
-    "vue-router": "^4.4.0",
-    "vue-timeline-chart": "^2.5.0",
-    "vue-timeline-component": "^0.1.6"
+    "vue-router": "^4.4.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",

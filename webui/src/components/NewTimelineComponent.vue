@@ -8,40 +8,39 @@
             :initialViewportStart="start"
             :initialViewportEnd="end"
         >
-            <!-- <template #item="{ item }">
-                <div
-                    style="inset: 0; position: absolute; padding: 0.2em 1em; color: white; font-weight: bold"
-                    :data-tippy-content="item.tooltip"
-                >
-                    ⚑ {{ item.name }}
-                </div>
-            </template> -->
+            <template #item="{ item }">
+                <div>⚑ {{ item.name }}</div>
+            </template>
         </Timeline>
     </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { Timeline } from 'vue-timeline-chart'
 import 'vue-timeline-chart/style.css'
-import { resultData } from '@/helpers/ResultInterface'
+// import { resultData } from '@/helpers/ResultInterface'
 import { onBeforeMount, ref } from 'vue'
 
-const props = defineProps<{
-    data: resultData
-}>()
+// const props = defineProps<{
+//     data: resultData
+// }>()
 
-interface item {
-    id: string
-    group: string
-    name: string
-    type: string
-    start: Date
-    cssVariables: { string: string }
-}
+const props = defineProps({
+    data: Object,
+})
 
-let items: Array<item>
-let start: number = new Date(props.data.hits[0]['collection-date']).valueOf()
-let end: number = new Date(props.data.hits[props.data.hits.length - 1]['collection-date']).valueOf() + 1
+// interface item {
+//     id: string
+//     group: string
+//     name: string
+//     type: string
+//     start: Date
+//     cssVariables: { string: string }
+// }
+
+let items
+let start = new Date(props.data.hits[0]['collection-date']).valueOf()
+let end = new Date(props.data.hits[props.data.hits.length - 1]['collection-date']).valueOf() + 1
 
 onBeforeMount(() => {
     items = processDates()
@@ -52,8 +51,6 @@ function processDates() {
     props.data.hits.forEach((e) => {
         const date = new Date(e['collection-date']).valueOf()
 
-        // const date = new Date('2014-06-18')
-        // const clonedate = new Date(date.valueOf())
         console.log(date.valueOf())
         dates.push({
             id: '1',
