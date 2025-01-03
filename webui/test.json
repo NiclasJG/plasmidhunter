@@ -54,7 +54,7 @@
                 {
                     "key": "NCBI sample classification",
                     "unit": null,
-                    "value": "410658"
+                    "value": "410658 d3: ~5.15.0"
                 },
                 {
                     "key": "instrument model",

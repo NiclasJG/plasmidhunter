@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, toRaw, onBeforeMount } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const vegalite = ref(null)
 
@@ -34,7 +34,14 @@ function processDates() {
 function mountGraph() {
     const values = processDates()
 
-    console.log(values)
+    // console.log(values)
+    // values.push({
+    //     date: 1577836800000,
+    // })
+    // values.push({
+    //     date: 1609459200000,
+    // })
+
     const spec = {
         $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
         data: {

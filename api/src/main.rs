@@ -1,23 +1,20 @@
 use std::sync::Arc;
 
 use api_model::PlasmidHunterModel;
-use axum::{
-    extract::{Path, State}, http::StatusCode, response::IntoResponse, routing::{get, post}, Error, Json, Router
+use axum::{routing::post, Router
 };
 
 use tokio::net::TcpListener;
 use tower_http::{cors::CorsLayer, trace::TraceLayer};
-
-// use crate::api_model::ph_db;
 mod api_structs;
 mod api_handler;
 mod api_model;
 mod argo {
     pub mod client;
     mod urls;
+    mod structs;
 }
 mod s3_helper;
-
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -25,6 +22,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     //load .env for s3 variables
     dotenvy::dotenv()?;
 
+    //0.0.0.0
     let server_address = "127.0.0.1:1239";
     
     let listener = TcpListener::bind(server_address)
@@ -42,11 +40,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     println!("listening on {}", listener.local_addr().unwrap());
 
-    let app = Router::new().route("/", get(|| async {"Helllo"}).post(api_handler::create_job))
-        // .route("/api/v1/job/init", get(||async{"Hello"}))
+    let app = Router::new().route("/", post(api_handler::create_job))
         .route("/api/v1/job/list", post(api_handler::get_job_list))
         .route("/api/v1/job/result", post(api_handler::get_job_result))
-        // .route("/about", get(|| async {"Helllo"}))
+        .route("/api/v1/job/delete", post(api_handler::delete_job))
         .with_state(plasmid_hunter_model)
         .layer(CorsLayer::very_permissive())
         .layer(TraceLayer::new_for_http()

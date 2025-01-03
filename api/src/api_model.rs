@@ -1,12 +1,11 @@
 use std::{collections::HashMap, sync::Arc};
 
-use chrono::{DateTime, Utc};
-use serde::de::value;
+use chrono::Utc;
 use tokio::sync::RwLock;
 use reqwest::header::CONTENT_TYPE;
-use anyhow::{Ok, Result};
+use anyhow::{Ok, Result, anyhow};
 
-use uuid::{uuid, Uuid};
+use uuid::Uuid;
 use rand::distributions::{Alphanumeric, DistString};
 
 use crate::api_structs::*;
@@ -33,47 +32,34 @@ pub struct PlasmidHunterModel{
     pub state_handler: Arc<StateHandler>, 
 }
 
-// pub type DB = Arc<PlasmidHunterModel>;
-
-// pub async fn ph_db() -> DB {
-//     Arc::new(PlasmidHunterModel::new().await)
-// }
-
 impl StateHandler{
     pub async fn update_jobs(&self) -> Result<()> {
         
 
         let job_list = self.argo_client.get_workflows().await.unwrap();
         let mut job_state_list = self.job_state.write().await;
-        // println!("test1");
-        // let job_list_iter = job_list.items.iter();
+        
+
         for job in job_list.items {
+            // Option für bei variablen
             let mut jobid = Uuid::new_v4();
             let mut name = String::new();
             for param in job.spec.arguments.parameters {
                 if param.name == "jobid" {
                     // crashes if value cant be parsed
-                    // println!("{:?}", param.value);
                     jobid = Uuid::parse_str(&param.value).unwrap();
-                    // println!("{:?}{:?}", jobid, param.value);
                 } 
                 if param.name == "parameter" {
                     name = String::from(param.value)
                 }
             }
             
-
+            //let else; Some() else
             let job_full_state = job_state_list.get(&jobid);
 
             if job_full_state.is_some() {
                 let full_state = job_full_state.unwrap().clone();
                 let api_status = full_state.api_status.unwrap().clone();
-                // if job.status.phase == "Succeeded" {
-                //     let mut api_status = full_state.api_status.unwrap();
-                //     api_status.status = job.status.phase;
-                //     api_status.updated = job.status.finishedAt.unwrap();
-                // }
-                // println!("test4.1");
 
                 // just update status and updated?
                 if job.status.phase == "Succeeded" {
@@ -91,7 +77,6 @@ impl StateHandler{
                     };
 
                     job_state_list.insert(jobid.clone(), full_job_state);
-                    // println!("test5.1");
                 } else {
                     //just update updated?
                     let full_job_state = FullJobState {
@@ -108,9 +93,17 @@ impl StateHandler{
                     };
 
                     job_state_list.insert(jobid.clone(), full_job_state);
-                    // println!("test6.1");
                 }
             } else {
+                let secret: &String;
+                let string = &String::from("Unknown");
+
+                if job.metadata.labels.get(&String::from("jobsecret")).is_some() {
+                    secret = job.metadata.labels.get(&String::from("jobsecret")).unwrap();
+                } else {
+                    secret = string;
+                }
+
                 let full_job_state = FullJobState {
                     api_status: Some(JobStatus {
                         id: jobid.clone(),
@@ -120,24 +113,18 @@ impl StateHandler{
                         name: name.clone(),
                     }), 
                     workflowname: Some(job.metadata.name.clone()), 
-                    secret: job.metadata.name.clone(),
+                    secret: secret.to_string(),
                     name: name.clone(),
                 };
                 job_state_list.insert(jobid.clone(), full_job_state);
-                // let full_job_state2 = test.get_mut(&jobid).unwrap();
-                // full_job_state2 = full_job_state;
-                // println!("test7.122");
-                // full_job_state2.api_status = full_job_state.api_status;
-                // full_job_state2.workflowname = full_job_state.workflowname;
-                // full_job_state2.secret = full_job_state.secret;
-                // full_job_state2.name = full_job_state.name;
-                // println!("test7.2");
             }
         }
+        drop(job_state_list);
+
         Ok(())
     } 
 
-    pub async fn create_job(&self, name: &String) -> (Uuid, String) { //, sequenz: &String, s3_post_url: &String
+    pub async fn create_job(&self, name: &String) -> (Uuid, String) {
         // add name trim?
 
         let job_id = Uuid::new_v4();
@@ -156,32 +143,23 @@ impl StateHandler{
         (job_id, secret)
     }
 
-    pub async fn start_job(&self, name: &String, sequenz: &String, s3_post_url: &String, jobid: &Uuid ) -> Result<()> {
-        let mut map = HashMap::new();
-        map.insert("name:", &name);
-        map.insert("dna_sequenz", &sequenz);
-        
-    
-        let pname = name;
-        let dsequenz = sequenz;
-    
+    pub async fn start_job(&self, name: &String, sequenz: &String, s3_post_url: &String, jobid: &Uuid, secret: &String ) -> Result<()> {
+   
         let client = &self.argo_client.client;
         let s3_response = client.put(s3_post_url)
                         .header(CONTENT_TYPE, "text/plain")
                         // .danger_accept_invalid_hostnames()
-                        .body(format!("{pname}\n{dsequenz}").to_string())
-                        // .json(&map)
+                        .body(format!("{name}\n{sequenz}").to_string())
                         .send()
                         .await;
 
-        // println!("{:?}", s3_response);
-
-        let argo_response = self.argo_client.start_workflow(&jobid.to_string(), name).await?;
+        let argo_response = self.argo_client.start_workflow(&jobid.to_string(), name, secret).await?;
 
         let job_status = JobStatus{
           id: jobid.clone(),
           status: String::from("Started"),
-          started: argo_response.metadata.creationTimestamp.unwrap(),
+        //   started: argo_response.metadata.creationTimestamp.unwrap(),
+          started: Utc::now(),
           updated: Utc::now(),
           name: name.clone()
         };
@@ -196,11 +174,9 @@ impl StateHandler{
         drop(write_state);
 
         Ok(())
-        // println!("{:?}", test)
-
     }
 
-    pub async fn get_jobs(&self, job_list: Vec<Job>) -> ListRespone {
+    pub async fn get_jobs(&self, job_list: Vec<Job>) -> Result<ListRespone> {
         
         let mut jobs = vec![]; 
 
@@ -210,33 +186,51 @@ impl StateHandler{
             
             let job_api_status = read_state.get(&job.id);
             if job_api_status.is_some() {
-                //secret check
-                jobs.push(job_api_status.unwrap().api_status.as_ref().unwrap().clone())
+                if job_api_status.unwrap().secret == job.secret {
+                    jobs.push(job_api_status.unwrap().api_status.as_ref().unwrap().clone())
+                }
             }
             
         };
         
-        ListRespone {jobs}
+        Ok(ListRespone{jobs})
     }
 
     pub async fn get_job_result(&self, job: Job, result_url: String) -> Result<ResultResponse> {
+        
         let read_state = self.job_state.read().await;
 
-        let job_api_status = read_state.get(&job.id).unwrap();
-        // let Some(job_api_status) = read_state.get(&job.id) else {
-        //     return Err("Job ID couldnt be found".into())
-        // };
-
+        let job_api_status = read_state.get(&job.id);
         //secret check
+        if job_api_status.is_some() {
+            if job_api_status.unwrap().secret == job.secret{
+                return Ok( ResultResponse {
+                name: job_api_status.unwrap().name.clone(),
+                data: result_url
+            })
+            }
+        }
 
-        let result_response = ResultResponse {
-            name: job_api_status.name.clone(),
-            data: result_url
-        };
-
-        Ok(result_response)
+        Err(anyhow!("Job not found"))
     }
 
+    pub async fn delete_job(&self, job: Job) -> Result<()>{
+        let read_state = self.job_state.read().await;
+
+        let job_api_status = read_state.get(&job.id);
+
+        // delete job from state_handler hashmap?
+
+        if job_api_status.is_some() {
+            if job_api_status.unwrap().secret == job.secret {
+                let response = self.argo_client
+                .delete_workflow(job_api_status.unwrap().workflowname.as_ref().unwrap().to_string())
+                .await;
+            }
+        }
+
+        Ok(())
+    }
 }
 
 impl PlasmidHunterModel {
@@ -255,10 +249,9 @@ impl PlasmidHunterModel {
             argo_client: argo_client,
         });
 
-        let state_handler_clone = state_handler.clone();
-        // state_handler_clone.update_jobs().await;
-
         let s3_handler = S3Handler::new().await;
+
+        let init_state = state_handler.update_jobs().await;
 
         PlasmidHunterModel
         {

@@ -6,12 +6,9 @@
 
 <script setup lang="ts">
 //@ts-ignore
-import { Obj, reference } from '@popperjs/core'
 import igv from 'igv'
 import { resultData } from '@/helpers/ResultInterface'
-
 import { ref, onMounted } from 'vue'
-import { elements } from 'chart.js'
 
 // Receive data from parent component (JobView.vue)
 const props = defineProps<{

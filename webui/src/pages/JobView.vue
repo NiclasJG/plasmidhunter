@@ -7,18 +7,6 @@
                     <h3>Locations</h3>
                     <Map ref="MapRef" :data="fetchData" />
                 </div>
-                <!--      <div class="col">
-                    <h3>Timeline</h3>
-                    <TimelineComponent :dateList="fetchData" />
-                </div> -->
-                <!-- <div class="col">
-                    <h3>Timeline</h3>
-                    <NewTimelineComponent :data="fetchData" />
-                </div> -->
-                <!-- <div class="col">
-                    <h3>Timeline</h3>
-                    <timelinetest :data="fetchData" />
-                </div> -->
                 <div class="col">
                     <histogramcomp :data="fetchData" />
                 </div>
@@ -90,9 +78,6 @@
 <script setup lang="ts">
 import IgvViewer from '@/components/IgvViewer.vue'
 import Map from '@/components/MapComponent.vue'
-import TimelineComponent from '@/components/TimelineComponent.vue'
-import NewTimelineComponent from '@/components/NewTimelineComponent.vue'
-import timelinetest from '@/components/timelinetest.vue'
 import histogramcomp from '@/components/HistogramComponent.vue'
 
 import { ref, onMounted } from 'vue'
@@ -107,19 +92,19 @@ const loaded = ref(false)
 
 const fetchData = ref<resultData>()
 
-await fetch('http://localhost:5173/result.json')
-    .then((response) => response.json())
-    .then((data) => (fetchData.value = data))
-    .catch((error) => console.log(error))
-loaded.value = true
+// await fetch('http://localhost:5173/result.json')
+//     .then((response) => response.json())
+//     .then((data) => (fetchData.value = data))
+//     .catch((error) => console.log(error))
+// loaded.value = true
 
-// onMounted(async () => {
-//     let job = getSingleJob(route.params.id.toLocaleString())
-//     console.log(job)
-//     fetchData.value = await getJobResult(job)
-//     loaded.value = true
-//     console.log(fetchData.value)
-// })
+onMounted(async () => {
+    let job = getSingleJob(route.params.id.toLocaleString())
+    // console.log(job)
+    fetchData.value = await getJobResult(job)
+    loaded.value = true
+    // console.log(fetchData.value)
+})
 
 // console.log(new Date('Oct-13-2010'))
 
