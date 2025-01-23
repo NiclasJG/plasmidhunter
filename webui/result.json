@@ -3489,11 +3489,11 @@
             "environment-biome": "human body",
             "environment-feature": "lower digestive tract",
             "environment-material": "feces",
-            "geo-loc-name": null,
+            "geo-loc-name": "Liscia",
             "host-tax-id": 9606,
             "last-update": "2021-10-16T15:27:28",
-            "latitude": 49.5,
-            "longitude": 6.2,
+            "latitude": 41.95524,
+            "longitude": 14.55532,
             "sample-alias": "M11.1-V3-stool",
             "sample-desc": "This sample has been submitted by pda|maylabel on 2019-03-27; human gut metagenome",
             "sample-metadata": [
@@ -3594,6 +3594,1006 @@
             "last-update": "2021-10-16T15:27:28",
             "latitude": 49.5,
             "longitude": 6.2,
+            "sample-alias": "M11.1-V3-stool",
+            "sample-desc": "This sample has been submitted by pda|maylabel on 2019-03-27; human gut metagenome",
+            "sample-metadata": [
+                {
+                    "key": "temperature",
+                    "unit": null,
+                    "value": "-80.0"
+                },
+                {
+                    "key": "geographic location (longitude)",
+                    "unit": null,
+                    "value": "6.2"
+                },
+                {
+                    "key": "geographic location (country and/or sea,region)",
+                    "unit": null,
+                    "value": "Luxembourg"
+                },
+                {
+                    "key": "collection date",
+                    "unit": null,
+                    "value": "2014-06-18"
+                },
+                {
+                    "key": "environment (biome)",
+                    "unit": null,
+                    "value": "human body"
+                },
+                {
+                    "key": "environment (feature)",
+                    "unit": null,
+                    "value": "lower digestive tract"
+                },
+                {
+                    "key": "environment (material)",
+                    "unit": null,
+                    "value": "feces"
+                },
+                {
+                    "key": "host taxid",
+                    "unit": null,
+                    "value": "9606"
+                },
+                {
+                    "key": "geographic location (latitude)",
+                    "unit": null,
+                    "value": "49.5"
+                },
+                {
+                    "key": "host sex",
+                    "unit": null,
+                    "value": "female"
+                }
+            ],
+            "sample-name": "M11.1-V3-stool",
+            "species": "Homo sapiens"
+        },
+        {
+            "accession": "SRS3984199",
+            "analysis-completed": null,
+            "biosample": "SAMN09837355",
+            "collection-date": "2014-05-18",
+            "contigs": [
+                {
+                    "alignment length": "1121",
+                    "contig": "newgenometest-NC_002119.2",
+                    "contig end": "1121",
+                    "contig length": "1121",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "2209",
+                    "plasmid length": "9957",
+                    "plasmid start": "1089",
+                    "strand": "+"
+                },
+                {
+                    "alignment length": "1596",
+                    "contig": "newgenometest-NC_002119.4",
+                    "contig end": "1596",
+                    "contig length": "1596",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "5897",
+                    "plasmid length": "9957",
+                    "plasmid start": "4302",
+                    "strand": "+"
+                }
+            ],
+            "environment-biome": "human body",
+            "environment-feature": "lower digestive tract",
+            "environment-material": "feces",
+            "geo-loc-name": "Estique",
+            "host-tax-id": 9606,
+            "last-update": "2021-10-16T15:27:28",
+            "latitude": -17.54167,
+            "longitude": -70.01861,
+            "sample-alias": "M11.1-V3-stool",
+            "sample-desc": "This sample has been submitted by pda|maylabel on 2019-03-27; human gut metagenome",
+            "sample-metadata": [
+                {
+                    "key": "temperature",
+                    "unit": null,
+                    "value": "-80.0"
+                },
+                {
+                    "key": "geographic location (longitude)",
+                    "unit": null,
+                    "value": "6.2"
+                },
+                {
+                    "key": "geographic location (country and/or sea,region)",
+                    "unit": null,
+                    "value": "Luxembourg"
+                },
+                {
+                    "key": "collection date",
+                    "unit": null,
+                    "value": "2014-06-18"
+                },
+                {
+                    "key": "environment (biome)",
+                    "unit": null,
+                    "value": "human body"
+                },
+                {
+                    "key": "environment (feature)",
+                    "unit": null,
+                    "value": "lower digestive tract"
+                },
+                {
+                    "key": "environment (material)",
+                    "unit": null,
+                    "value": "feces"
+                },
+                {
+                    "key": "host taxid",
+                    "unit": null,
+                    "value": "9606"
+                },
+                {
+                    "key": "geographic location (latitude)",
+                    "unit": null,
+                    "value": "49.5"
+                },
+                {
+                    "key": "host sex",
+                    "unit": null,
+                    "value": "female"
+                }
+            ],
+            "sample-name": "M11.1-V3-stool",
+            "species": "Homo sapiens"
+        },
+        {
+            "accession": "SRS3984199",
+            "analysis-completed": null,
+            "biosample": "SAMN09837355",
+            "collection-date": "2014-06-20",
+            "contigs": [
+                {
+                    "alignment length": "1121",
+                    "contig": "newgenometest-NC_002119.2",
+                    "contig end": "1121",
+                    "contig length": "1121",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "2209",
+                    "plasmid length": "9957",
+                    "plasmid start": "1089",
+                    "strand": "+"
+                },
+                {
+                    "alignment length": "1596",
+                    "contig": "newgenometest-NC_002119.4",
+                    "contig end": "1596",
+                    "contig length": "1596",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "5897",
+                    "plasmid length": "9957",
+                    "plasmid start": "4302",
+                    "strand": "+"
+                }
+            ],
+            "environment-biome": "human body",
+            "environment-feature": "lower digestive tract",
+            "environment-material": "feces",
+            "geo-loc-name": "Everdingen",
+            "host-tax-id": 9606,
+            "last-update": "2021-10-16T15:27:28",
+            "latitude": 51.965,
+            "longitude": 5.15556,
+            "sample-alias": "M11.1-V3-stool",
+            "sample-desc": "This sample has been submitted by pda|maylabel on 2019-03-27; human gut metagenome",
+            "sample-metadata": [
+                {
+                    "key": "temperature",
+                    "unit": null,
+                    "value": "-80.0"
+                },
+                {
+                    "key": "geographic location (longitude)",
+                    "unit": null,
+                    "value": "6.2"
+                },
+                {
+                    "key": "geographic location (country and/or sea,region)",
+                    "unit": null,
+                    "value": "Luxembourg"
+                },
+                {
+                    "key": "collection date",
+                    "unit": null,
+                    "value": "2014-06-18"
+                },
+                {
+                    "key": "environment (biome)",
+                    "unit": null,
+                    "value": "human body"
+                },
+                {
+                    "key": "environment (feature)",
+                    "unit": null,
+                    "value": "lower digestive tract"
+                },
+                {
+                    "key": "environment (material)",
+                    "unit": null,
+                    "value": "feces"
+                },
+                {
+                    "key": "host taxid",
+                    "unit": null,
+                    "value": "9606"
+                },
+                {
+                    "key": "geographic location (latitude)",
+                    "unit": null,
+                    "value": "49.5"
+                },
+                {
+                    "key": "host sex",
+                    "unit": null,
+                    "value": "female"
+                }
+            ],
+            "sample-name": "M11.1-V3-stool",
+            "species": "Homo sapiens"
+        },
+        {
+            "accession": "SRS3984199",
+            "analysis-completed": null,
+            "biosample": "SAMN09837355",
+            "collection-date": "2014-07-18",
+            "contigs": [
+                {
+                    "alignment length": "1121",
+                    "contig": "newgenometest-NC_002119.2",
+                    "contig end": "1121",
+                    "contig length": "1121",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "2209",
+                    "plasmid length": "9957",
+                    "plasmid start": "1089",
+                    "strand": "+"
+                },
+                {
+                    "alignment length": "1596",
+                    "contig": "newgenometest-NC_002119.4",
+                    "contig end": "1596",
+                    "contig length": "1596",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "5897",
+                    "plasmid length": "9957",
+                    "plasmid start": "4302",
+                    "strand": "+"
+                }
+            ],
+            "environment-biome": "human body",
+            "environment-feature": "lower digestive tract",
+            "environment-material": "feces",
+            "geo-loc-name": "Palos Altos",
+            "host-tax-id": 9606,
+            "last-update": "2021-10-16T15:27:28",
+            "latitude": 20.87143,
+            "longitude": -103.15296,
+            "sample-alias": "M11.1-V3-stool",
+            "sample-desc": "This sample has been submitted by pda|maylabel on 2019-03-27; human gut metagenome",
+            "sample-metadata": [
+                {
+                    "key": "temperature",
+                    "unit": null,
+                    "value": "-80.0"
+                },
+                {
+                    "key": "geographic location (longitude)",
+                    "unit": null,
+                    "value": "6.2"
+                },
+                {
+                    "key": "geographic location (country and/or sea,region)",
+                    "unit": null,
+                    "value": "Luxembourg"
+                },
+                {
+                    "key": "collection date",
+                    "unit": null,
+                    "value": "2014-06-18"
+                },
+                {
+                    "key": "environment (biome)",
+                    "unit": null,
+                    "value": "human body"
+                },
+                {
+                    "key": "environment (feature)",
+                    "unit": null,
+                    "value": "lower digestive tract"
+                },
+                {
+                    "key": "environment (material)",
+                    "unit": null,
+                    "value": "feces"
+                },
+                {
+                    "key": "host taxid",
+                    "unit": null,
+                    "value": "9606"
+                },
+                {
+                    "key": "geographic location (latitude)",
+                    "unit": null,
+                    "value": "49.5"
+                },
+                {
+                    "key": "host sex",
+                    "unit": null,
+                    "value": "female"
+                }
+            ],
+            "sample-name": "M11.1-V3-stool",
+            "species": "Homo sapiens"
+        },
+        {
+            "accession": "SRS3984199",
+            "analysis-completed": null,
+            "biosample": "SAMN09837355",
+            "collection-date": "2014-01-18",
+            "contigs": [
+                {
+                    "alignment length": "1121",
+                    "contig": "newgenometest-NC_002119.2",
+                    "contig end": "1121",
+                    "contig length": "1121",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "2209",
+                    "plasmid length": "9957",
+                    "plasmid start": "1089",
+                    "strand": "+"
+                },
+                {
+                    "alignment length": "1596",
+                    "contig": "newgenometest-NC_002119.4",
+                    "contig end": "1596",
+                    "contig length": "1596",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "5897",
+                    "plasmid length": "9957",
+                    "plasmid start": "4302",
+                    "strand": "+"
+                }
+            ],
+            "environment-biome": "human body",
+            "environment-feature": "lower digestive tract",
+            "environment-material": "feces",
+            "geo-loc-name": "Caniezza",
+            "host-tax-id": 9606,
+            "last-update": "2021-10-16T15:27:28",
+            "latitude": 45.85274,
+            "longitude": 11.899,
+            "sample-alias": "M11.1-V3-stool",
+            "sample-desc": "This sample has been submitted by pda|maylabel on 2019-03-27; human gut metagenome",
+            "sample-metadata": [
+                {
+                    "key": "temperature",
+                    "unit": null,
+                    "value": "-80.0"
+                },
+                {
+                    "key": "geographic location (longitude)",
+                    "unit": null,
+                    "value": "6.2"
+                },
+                {
+                    "key": "geographic location (country and/or sea,region)",
+                    "unit": null,
+                    "value": "Luxembourg"
+                },
+                {
+                    "key": "collection date",
+                    "unit": null,
+                    "value": "2014-06-18"
+                },
+                {
+                    "key": "environment (biome)",
+                    "unit": null,
+                    "value": "human body"
+                },
+                {
+                    "key": "environment (feature)",
+                    "unit": null,
+                    "value": "lower digestive tract"
+                },
+                {
+                    "key": "environment (material)",
+                    "unit": null,
+                    "value": "feces"
+                },
+                {
+                    "key": "host taxid",
+                    "unit": null,
+                    "value": "9606"
+                },
+                {
+                    "key": "geographic location (latitude)",
+                    "unit": null,
+                    "value": "49.5"
+                },
+                {
+                    "key": "host sex",
+                    "unit": null,
+                    "value": "female"
+                }
+            ],
+            "sample-name": "M11.1-V3-stool",
+            "species": "Homo sapiens"
+        },
+        {
+            "accession": "SRS3984199",
+            "analysis-completed": null,
+            "biosample": "SAMN09837355",
+            "collection-date": "2015-06-18",
+            "contigs": [
+                {
+                    "alignment length": "1121",
+                    "contig": "newgenometest-NC_002119.2",
+                    "contig end": "1121",
+                    "contig length": "1121",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "2209",
+                    "plasmid length": "9957",
+                    "plasmid start": "1089",
+                    "strand": "+"
+                },
+                {
+                    "alignment length": "1596",
+                    "contig": "newgenometest-NC_002119.4",
+                    "contig end": "1596",
+                    "contig length": "1596",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "5897",
+                    "plasmid length": "9957",
+                    "plasmid start": "4302",
+                    "strand": "+"
+                }
+            ],
+            "environment-biome": "human body",
+            "environment-feature": "lower digestive tract",
+            "environment-material": "feces",
+            "geo-loc-name": "Hormilla",
+            "host-tax-id": 9606,
+            "last-update": "2021-10-16T15:27:28",
+            "latitude": 42.43828,
+            "longitude": -2.77447,
+            "sample-alias": "M11.1-V3-stool",
+            "sample-desc": "This sample has been submitted by pda|maylabel on 2019-03-27; human gut metagenome",
+            "sample-metadata": [
+                {
+                    "key": "temperature",
+                    "unit": null,
+                    "value": "-80.0"
+                },
+                {
+                    "key": "geographic location (longitude)",
+                    "unit": null,
+                    "value": "6.2"
+                },
+                {
+                    "key": "geographic location (country and/or sea,region)",
+                    "unit": null,
+                    "value": "Luxembourg"
+                },
+                {
+                    "key": "collection date",
+                    "unit": null,
+                    "value": "2014-06-18"
+                },
+                {
+                    "key": "environment (biome)",
+                    "unit": null,
+                    "value": "human body"
+                },
+                {
+                    "key": "environment (feature)",
+                    "unit": null,
+                    "value": "lower digestive tract"
+                },
+                {
+                    "key": "environment (material)",
+                    "unit": null,
+                    "value": "feces"
+                },
+                {
+                    "key": "host taxid",
+                    "unit": null,
+                    "value": "9606"
+                },
+                {
+                    "key": "geographic location (latitude)",
+                    "unit": null,
+                    "value": "49.5"
+                },
+                {
+                    "key": "host sex",
+                    "unit": null,
+                    "value": "female"
+                }
+            ],
+            "sample-name": "M11.1-V3-stool",
+            "species": "Homo sapiens"
+        },
+        {
+            "accession": "SRS3984199",
+            "analysis-completed": null,
+            "biosample": "SAMN09837355",
+            "collection-date": "2008-07-05",
+            "contigs": [
+                {
+                    "alignment length": "1121",
+                    "contig": "newgenometest-NC_002119.2",
+                    "contig end": "1121",
+                    "contig length": "1121",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "2209",
+                    "plasmid length": "9957",
+                    "plasmid start": "1089",
+                    "strand": "+"
+                },
+                {
+                    "alignment length": "1596",
+                    "contig": "newgenometest-NC_002119.4",
+                    "contig end": "1596",
+                    "contig length": "1596",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "5897",
+                    "plasmid length": "9957",
+                    "plasmid start": "4302",
+                    "strand": "+"
+                }
+            ],
+            "environment-biome": "human body",
+            "environment-feature": "lower digestive tract",
+            "environment-material": "feces",
+            "geo-loc-name": "Izunokuni",
+            "host-tax-id": 9606,
+            "last-update": "2021-10-16T15:27:28",
+            "latitude": 35.03907,
+            "longitude": 138.95143,
+            "sample-alias": "M11.1-V3-stool",
+            "sample-desc": "This sample has been submitted by pda|maylabel on 2019-03-27; human gut metagenome",
+            "sample-metadata": [
+                {
+                    "key": "temperature",
+                    "unit": null,
+                    "value": "-80.0"
+                },
+                {
+                    "key": "geographic location (longitude)",
+                    "unit": null,
+                    "value": "6.2"
+                },
+                {
+                    "key": "geographic location (country and/or sea,region)",
+                    "unit": null,
+                    "value": "Luxembourg"
+                },
+                {
+                    "key": "collection date",
+                    "unit": null,
+                    "value": "2014-06-18"
+                },
+                {
+                    "key": "environment (biome)",
+                    "unit": null,
+                    "value": "human body"
+                },
+                {
+                    "key": "environment (feature)",
+                    "unit": null,
+                    "value": "lower digestive tract"
+                },
+                {
+                    "key": "environment (material)",
+                    "unit": null,
+                    "value": "feces"
+                },
+                {
+                    "key": "host taxid",
+                    "unit": null,
+                    "value": "9606"
+                },
+                {
+                    "key": "geographic location (latitude)",
+                    "unit": null,
+                    "value": "49.5"
+                },
+                {
+                    "key": "host sex",
+                    "unit": null,
+                    "value": "female"
+                }
+            ],
+            "sample-name": "M11.1-V3-stool",
+            "species": "Homo sapiens"
+        },
+        {
+            "accession": "SRS3984199",
+            "analysis-completed": null,
+            "biosample": "SAMN09837355",
+            "collection-date": "2008-07-05",
+            "contigs": [
+                {
+                    "alignment length": "1121",
+                    "contig": "newgenometest-NC_002119.2",
+                    "contig end": "1121",
+                    "contig length": "1121",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "2209",
+                    "plasmid length": "9957",
+                    "plasmid start": "1089",
+                    "strand": "+"
+                },
+                {
+                    "alignment length": "1596",
+                    "contig": "newgenometest-NC_002119.4",
+                    "contig end": "1596",
+                    "contig length": "1596",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "5897",
+                    "plasmid length": "9957",
+                    "plasmid start": "4302",
+                    "strand": "+"
+                }
+            ],
+            "environment-biome": "human body",
+            "environment-feature": "lower digestive tract",
+            "environment-material": "feces",
+            "geo-loc-name": "Kauswagan",
+            "host-tax-id": 9606,
+            "last-update": "2021-10-16T15:27:28",
+            "latitude": 8.19167,
+            "longitude": 124.08472,
+            "sample-alias": "M11.1-V3-stool",
+            "sample-desc": "This sample has been submitted by pda|maylabel on 2019-03-27; human gut metagenome",
+            "sample-metadata": [
+                {
+                    "key": "temperature",
+                    "unit": null,
+                    "value": "-80.0"
+                },
+                {
+                    "key": "geographic location (longitude)",
+                    "unit": null,
+                    "value": "6.2"
+                },
+                {
+                    "key": "geographic location (country and/or sea,region)",
+                    "unit": null,
+                    "value": "Luxembourg"
+                },
+                {
+                    "key": "collection date",
+                    "unit": null,
+                    "value": "2014-06-18"
+                },
+                {
+                    "key": "environment (biome)",
+                    "unit": null,
+                    "value": "human body"
+                },
+                {
+                    "key": "environment (feature)",
+                    "unit": null,
+                    "value": "lower digestive tract"
+                },
+                {
+                    "key": "environment (material)",
+                    "unit": null,
+                    "value": "feces"
+                },
+                {
+                    "key": "host taxid",
+                    "unit": null,
+                    "value": "9606"
+                },
+                {
+                    "key": "geographic location (latitude)",
+                    "unit": null,
+                    "value": "49.5"
+                },
+                {
+                    "key": "host sex",
+                    "unit": null,
+                    "value": "female"
+                }
+            ],
+            "sample-name": "M11.1-V3-stool",
+            "species": "Homo sapiens"
+        },
+        {
+            "accession": "SRS3984199",
+            "analysis-completed": null,
+            "biosample": "SAMN09837355",
+            "collection-date": "2005-01-05",
+            "contigs": [
+                {
+                    "alignment length": "1121",
+                    "contig": "newgenometest-NC_002119.2",
+                    "contig end": "1121",
+                    "contig length": "1121",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "2209",
+                    "plasmid length": "9957",
+                    "plasmid start": "1089",
+                    "strand": "+"
+                },
+                {
+                    "alignment length": "1596",
+                    "contig": "newgenometest-NC_002119.4",
+                    "contig end": "1596",
+                    "contig length": "1596",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "5897",
+                    "plasmid length": "9957",
+                    "plasmid start": "4302",
+                    "strand": "+"
+                }
+            ],
+            "environment-biome": "human body",
+            "environment-feature": "lower digestive tract",
+            "environment-material": "feces",
+            "geo-loc-name": "Babylon",
+            "host-tax-id": 9606,
+            "last-update": "2021-10-16T15:27:28",
+            "latitude": 40.69566,
+            "longitude": -73.32568,
+            "sample-alias": "M11.1-V3-stool",
+            "sample-desc": "This sample has been submitted by pda|maylabel on 2019-03-27; human gut metagenome",
+            "sample-metadata": [
+                {
+                    "key": "temperature",
+                    "unit": null,
+                    "value": "-80.0"
+                },
+                {
+                    "key": "geographic location (longitude)",
+                    "unit": null,
+                    "value": "6.2"
+                },
+                {
+                    "key": "geographic location (country and/or sea,region)",
+                    "unit": null,
+                    "value": "Luxembourg"
+                },
+                {
+                    "key": "collection date",
+                    "unit": null,
+                    "value": "2014-06-18"
+                },
+                {
+                    "key": "environment (biome)",
+                    "unit": null,
+                    "value": "human body"
+                },
+                {
+                    "key": "environment (feature)",
+                    "unit": null,
+                    "value": "lower digestive tract"
+                },
+                {
+                    "key": "environment (material)",
+                    "unit": null,
+                    "value": "feces"
+                },
+                {
+                    "key": "host taxid",
+                    "unit": null,
+                    "value": "9606"
+                },
+                {
+                    "key": "geographic location (latitude)",
+                    "unit": null,
+                    "value": "49.5"
+                },
+                {
+                    "key": "host sex",
+                    "unit": null,
+                    "value": "female"
+                }
+            ],
+            "sample-name": "M11.1-V3-stool",
+            "species": "Homo sapiens"
+        },
+        {
+            "accession": "SRS3984199",
+            "analysis-completed": null,
+            "biosample": "SAMN09837355",
+            "collection-date": "2010-12-05",
+            "contigs": [
+                {
+                    "alignment length": "1121",
+                    "contig": "newgenometest-NC_002119.2",
+                    "contig end": "1121",
+                    "contig length": "1121",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "2209",
+                    "plasmid length": "9957",
+                    "plasmid start": "1089",
+                    "strand": "+"
+                },
+                {
+                    "alignment length": "1596",
+                    "contig": "newgenometest-NC_002119.4",
+                    "contig end": "1596",
+                    "contig length": "1596",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "5897",
+                    "plasmid length": "9957",
+                    "plasmid start": "4302",
+                    "strand": "+"
+                }
+            ],
+            "environment-biome": "human body",
+            "environment-feature": "lower digestive tract",
+            "environment-material": "feces",
+            "geo-loc-name": "Mengdong",
+            "host-tax-id": 9606,
+            "last-update": "2021-10-16T15:27:28",
+            "latitude": 23.16152,
+            "longitude": 99.20226,
+            "sample-alias": "M11.1-V3-stool",
+            "sample-desc": "This sample has been submitted by pda|maylabel on 2019-03-27; human gut metagenome",
+            "sample-metadata": [
+                {
+                    "key": "temperature",
+                    "unit": null,
+                    "value": "-80.0"
+                },
+                {
+                    "key": "geographic location (longitude)",
+                    "unit": null,
+                    "value": "6.2"
+                },
+                {
+                    "key": "geographic location (country and/or sea,region)",
+                    "unit": null,
+                    "value": "Luxembourg"
+                },
+                {
+                    "key": "collection date",
+                    "unit": null,
+                    "value": "2014-06-18"
+                },
+                {
+                    "key": "environment (biome)",
+                    "unit": null,
+                    "value": "human body"
+                },
+                {
+                    "key": "environment (feature)",
+                    "unit": null,
+                    "value": "lower digestive tract"
+                },
+                {
+                    "key": "environment (material)",
+                    "unit": null,
+                    "value": "feces"
+                },
+                {
+                    "key": "host taxid",
+                    "unit": null,
+                    "value": "9606"
+                },
+                {
+                    "key": "geographic location (latitude)",
+                    "unit": null,
+                    "value": "49.5"
+                },
+                {
+                    "key": "host sex",
+                    "unit": null,
+                    "value": "female"
+                }
+            ],
+            "sample-name": "M11.1-V3-stool",
+            "species": "Homo sapiens"
+        },
+        {
+            "accession": "SRS3984199",
+            "analysis-completed": null,
+            "biosample": "SAMN09837355",
+            "collection-date": "2010-12-05",
+            "contigs": [
+                {
+                    "alignment length": "1121",
+                    "contig": "newgenometest-NC_002119.2",
+                    "contig end": "1121",
+                    "contig length": "1121",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "2209",
+                    "plasmid length": "9957",
+                    "plasmid start": "1089",
+                    "strand": "+"
+                },
+                {
+                    "alignment length": "1596",
+                    "contig": "newgenometest-NC_002119.4",
+                    "contig end": "1596",
+                    "contig length": "1596",
+                    "contig start": "1",
+                    "coverage[%]": "1.000",
+                    "identity[%]": "1.000",
+                    "plasmid": "p0",
+                    "plasmid end": "5897",
+                    "plasmid length": "9957",
+                    "plasmid start": "4302",
+                    "strand": "+"
+                }
+            ],
+            "environment-biome": "human body",
+            "environment-feature": "lower digestive tract",
+            "environment-material": "feces",
+            "geo-loc-name": "Mengdong",
+            "host-tax-id": 9606,
+            "last-update": "2021-10-16T15:27:28",
+            "latitude": 23.16152,
+            "longitude": 99.20226,
             "sample-alias": "M11.1-V3-stool",
             "sample-desc": "This sample has been submitted by pda|maylabel on 2019-03-27; human gut metagenome",
             "sample-metadata": [

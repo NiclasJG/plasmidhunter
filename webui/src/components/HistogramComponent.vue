@@ -1,5 +1,5 @@
 <template>
-    <div ref="vegalite"></div>
+    <div ref="vegalite" style="width: 100%"></div>
 </template>
 
 <script setup>
@@ -23,9 +23,12 @@ function processDates() {
     const dates = []
     props.data.hits.forEach((e) => {
         const date = new Date(e['collection-date']).valueOf()
-        dates.push({
-            date: date,
-        })
+        if (date !== 0) {
+            // console.log(date)
+            dates.push({
+                date: date,
+            })
+        }
     })
 
     return dates
@@ -34,21 +37,13 @@ function processDates() {
 function mountGraph() {
     const values = processDates()
 
-    // console.log(values)
-    // values.push({
-    //     date: 1577836800000,
-    // })
-    // values.push({
-    //     date: 1609459200000,
-    // })
-
     const spec = {
         $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
         data: {
             values,
         },
-        width: 500,
-        height: 300,
+        width: 'container', //500
+        height: 300, // 300
         selection: {
             brush: {
                 type: 'interval',
@@ -60,6 +55,7 @@ function mountGraph() {
         encoding: {
             x: {
                 field: 'date',
+                title: 'Date',
                 type: 'temporal',
                 bin: {
                     maxbins: 40,

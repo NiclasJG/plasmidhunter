@@ -67,14 +67,14 @@ export async function getJobResult(job: job) {
         })
 
     let test = resultResponse.data
-    console.log(resultResponse.data)
+    // console.log(resultResponse.data)
     await fetch(test)
         .then((response) => response.json())
         .then((data) => (results = data))
         .catch((error) => {
             console.error('Test:', error)
         })
-    console.log(resultResponse.data)
+    // console.log(resultResponse.data)
     return results
 }
     

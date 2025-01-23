@@ -1,19 +1,21 @@
 <template>
-    <div class="container fluid text-center">
-        <div><h1>Single Job</h1></div>
+    <div class="container-fluid text-center">
         <div v-if="loaded">
+            <div>
+                <h2>{{ fetchData.annotation.sequences[0].orig_description }}</h2>
+            </div>
             <div class="row" style="height: 400px">
-                <div class="col">
+                <div class="col" style="width: 50%">
                     <h3>Locations</h3>
                     <Map ref="MapRef" :data="fetchData" />
                 </div>
-                <div class="col">
+                <div class="col" style="width: 50%">
+                    <h3>Histogram</h3>
                     <histogramcomp :data="fetchData" />
                 </div>
             </div>
             <div class="row">
-                <h3>Data Table</h3>
-                <table class="table">
+                <table class="table gy-5">
                     <thead>
                         <tr>
                             <!-- <th>ID</th> -->
@@ -29,7 +31,14 @@
                     <tbody>
                         <tr v-for="(item, index) in fetchData.hits">
                             <td>{{ item.accession }}</td>
-                            <td>
+                            <td
+                                v-if="
+                                    fetchData.hits[index].latitude === null && fetchData.hits[index].longitude === null
+                                "
+                            >
+                                Not available
+                            </td>
+                            <td v-else-if="item['geo-loc-name'] !== null">
                                 <button
                                     @click="
                                         MapRef.centerMarker(
@@ -39,6 +48,19 @@
                                     "
                                 >
                                     {{ item['geo-loc-name'] }}
+                                    <!-- sample-metadata: "geographic location (country and/or sea,region)" -->
+                                </button>
+                            </td>
+                            <td v-else>
+                                <button
+                                    @click="
+                                        MapRef.centerMarker(
+                                            fetchData.hits[index].latitude,
+                                            fetchData.hits[index].longitude,
+                                        )
+                                    "
+                                >
+                                    Show
                                     <!-- sample-metadata: "geographic location (country and/or sea,region)" -->
                                 </button>
                             </td>
@@ -68,7 +90,7 @@
                 </table>
             </div>
             <div class="row">
-                <h3>Plasmid Viewer</h3>
+                <h3>Genome Viewer</h3>
                 <IgvViewer :data="fetchData" />
             </div>
         </div>
@@ -92,19 +114,19 @@ const loaded = ref(false)
 
 const fetchData = ref<resultData>()
 
-// await fetch('http://localhost:5173/result.json')
-//     .then((response) => response.json())
-//     .then((data) => (fetchData.value = data))
-//     .catch((error) => console.log(error))
-// loaded.value = true
+await fetch('http://localhost:5173/result.json')
+    .then((response) => response.json())
+    .then((data) => (fetchData.value = data))
+    .catch((error) => console.log(error))
+loaded.value = true
 
-onMounted(async () => {
-    let job = getSingleJob(route.params.id.toLocaleString())
-    // console.log(job)
-    fetchData.value = await getJobResult(job)
-    loaded.value = true
-    // console.log(fetchData.value)
-})
+// onMounted(async () => {
+//     let job = getSingleJob(route.params.id.toLocaleString())
+//     // console.log(job)
+//     fetchData.value = await getJobResult(job)
+//     loaded.value = true
+//     // console.log(fetchData.value)
+// })
 
 // console.log(new Date('Oct-13-2010'))
 
