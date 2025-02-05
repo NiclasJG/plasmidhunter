@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-//@ts-ignore
 import igv from 'igv'
 import { resultData } from '@/helpers/ResultInterface'
 import { ref, onMounted } from 'vue'
@@ -51,6 +50,7 @@ function setupIgv(options) {
         console.log('Browser ready')
         igv.browser = browser
     })
+    console.log(chrom)
 }
 
 // Update IGV-Viewer
@@ -64,7 +64,7 @@ function refreshIgv() {
 function createFastaUrl() {
     //Load Plasmid and create URL
     const plasmid_fasta =
-        '>' + props.data.annotation.sequences[0].orig_description + '\n' + props.data.annotation.sequences[0].sequence
+        '>' + props.data.annotation.sequences[0].orig_description + '\n' + props.data.annotation.sequences[0].nt
     const fastablob = new Blob([plasmid_fasta], { type: 'text/plain' })
     const fastaUrl = URL.createObjectURL(fastablob)
     return fastaUrl
@@ -89,13 +89,13 @@ function createTracks(annotation, results, chromosome) {
             color: 'rgb(100,0,0)',
         })
     })
-
+    console.log(chromosome)
     tracksArray.push(annotationTrack)
     console.log(tracksArray)
     try {
         results.forEach((element) => {
             // console.log(element)
-            const features = createFeatures(element.contigs, chromosome)
+            const features = createFeatures(element.contig, chromosome)
             tracksArray.push({
                 name: element.accession,
                 type: 'annotation',
@@ -117,8 +117,8 @@ function createFeatures(contigs, chromosome) {
         features.push({
             //chr must be same named as shown right from igv symbol in browser
             chr: chromosome,
-            start: element['plasmid start'],
-            end: element['plasmid end'],
+            start: element.plasmid_start,
+            end: element.plasmid_end,
             color: 'rgb(200,0,0)',
             row: 0,
         })

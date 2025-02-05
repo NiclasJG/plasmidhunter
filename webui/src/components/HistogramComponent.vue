@@ -22,7 +22,7 @@ function processDates() {
     // })
     const dates = []
     props.data.hits.forEach((e) => {
-        const date = new Date(e['collection-date']).valueOf()
+        const date = new Date(e.metadata['collection-date']).valueOf()
         if (date !== 0) {
             // console.log(date)
             dates.push({

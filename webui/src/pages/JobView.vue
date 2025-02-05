@@ -30,24 +30,25 @@
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in fetchData.hits">
-                            <td>{{ item.accession }}</td>
+                            <td>{{ item.metadata.accession }}</td>
                             <td
                                 v-if="
-                                    fetchData.hits[index].latitude === null && fetchData.hits[index].longitude === null
+                                    fetchData.hits[index].metadata.latitude === null &&
+                                    fetchData.hits[index].metadata.longitude === null
                                 "
                             >
                                 Not available
                             </td>
-                            <td v-else-if="item['geo-loc-name'] !== null">
+                            <td v-else-if="item.metadata['geo-loc-name'] !== null">
                                 <button
                                     @click="
                                         MapRef.centerMarker(
-                                            fetchData.hits[index].latitude,
-                                            fetchData.hits[index].longitude,
+                                            fetchData.hits[index].metadata.latitude,
+                                            fetchData.hits[index].metadata.longitude,
                                         )
                                     "
                                 >
-                                    {{ item['geo-loc-name'] }}
+                                    {{ item.metadata['geo-loc-name'] }}
                                     <!-- sample-metadata: "geographic location (country and/or sea,region)" -->
                                 </button>
                             </td>
@@ -55,8 +56,8 @@
                                 <button
                                     @click="
                                         MapRef.centerMarker(
-                                            fetchData.hits[index].latitude,
-                                            fetchData.hits[index].longitude,
+                                            fetchData.hits[index].metadata.latitude,
+                                            fetchData.hits[index].metadata.longitude,
                                         )
                                     "
                                 >
@@ -64,14 +65,14 @@
                                     <!-- sample-metadata: "geographic location (country and/or sea,region)" -->
                                 </button>
                             </td>
-                            <td>{{ item['collection-date'] }}</td>
+                            <td>{{ item.metadata['collection-date'] }}</td>
 
-                            <td>{{ item['sample-desc'] }}</td>
+                            <td>{{ item.metadata['sample-desc'] }}</td>
                             <!--       <td>{{ item.seqMethod }}</td> -->
-                            <td>{{ item['environment-biome'] }}</td>
+                            <td>{{ item.metadata['environment-biome'] }}</td>
                             <td>
                                 <a
-                                    :href="'https://www.ebi.ac.uk/biosamples/samples/' + item.biosample"
+                                    :href="'https://www.ebi.ac.uk/biosamples/samples/' + item.metadata.biosample"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     >BioSample</a
@@ -79,7 +80,7 @@
                             </td>
                             <td>
                                 <a
-                                    :href="'https://www.ebi.ac.uk/metagenomics/samples/' + item.accession"
+                                    :href="'https://www.ebi.ac.uk/metagenomics/samples/' + item.metadata.accession"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     >MGnify</a
@@ -114,19 +115,19 @@ const loaded = ref(false)
 
 const fetchData = ref<resultData>()
 
-await fetch('http://localhost:5173/result.json')
-    .then((response) => response.json())
-    .then((data) => (fetchData.value = data))
-    .catch((error) => console.log(error))
-loaded.value = true
+// await fetch('http://localhost:5173/result.json')
+//     .then((response) => response.json())
+//     .then((data) => (fetchData.value = data))
+//     .catch((error) => console.log(error))
+// loaded.value = true
 
-// onMounted(async () => {
-//     let job = getSingleJob(route.params.id.toLocaleString())
-//     // console.log(job)
-//     fetchData.value = await getJobResult(job)
-//     loaded.value = true
-//     // console.log(fetchData.value)
-// })
+onMounted(async () => {
+    let job = getSingleJob(route.params.id.toLocaleString())
+    // console.log(job)
+    fetchData.value = await getJobResult(job)
+    loaded.value = true
+    // console.log(fetchData.value)
+})
 
 // console.log(new Date('Oct-13-2010'))
 

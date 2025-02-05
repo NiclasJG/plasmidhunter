@@ -3,7 +3,7 @@ use std::{collections::HashMap, sync::Arc};
 use chrono::Utc;
 use tokio::sync::RwLock;
 use reqwest::header::CONTENT_TYPE;
-use anyhow::{Ok, Result, anyhow};
+use anyhow::{ Result, anyhow};
 
 use uuid::Uuid;
 use rand::distributions::{Alphanumeric, DistString};
@@ -40,14 +40,18 @@ impl StateHandler{
         let mut job_state_list = self.job_state.write().await;
         
 
-        for job in job_list.items {
+        'outer: for job in job_list.items {
             // Option für bei variablen
             let mut jobid = Uuid::new_v4();
             let mut name = String::new();
             for param in job.spec.arguments.parameters {
                 if param.name == "jobid" {
                     // crashes if value cant be parsed
-                    jobid = Uuid::parse_str(&param.value).unwrap();
+                    let Ok(job) = Uuid::parse_str(&param.value) else{
+                        continue 'outer;
+                        
+                    }; 
+                    jobid = job;
                 } 
                 if param.name == "parameter" {
                     name = String::from(param.value)

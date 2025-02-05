@@ -49,7 +49,10 @@ function setInitialMarker() {
         props.data.hits.forEach((element) => {
             // console.log(element.geolocation.location)
             try {
-                var marker = L.marker([parseFloat(element.latitude), parseFloat(element.longitude)]).addTo(map.value)
+                var marker = L.marker([
+                    parseFloat(element.metadata.latitude),
+                    parseFloat(element.metadata.longitude),
+                ]).addTo(map.value)
             } catch {
                 console.log('Location not available or found.')
             }

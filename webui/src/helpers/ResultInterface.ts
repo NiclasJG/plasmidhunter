@@ -1,6 +1,6 @@
 export interface resultData{
     annotation: annotationInterface
-    hits: Array<metaData>
+    hits: Array<sample>
 }
 
 
@@ -63,9 +63,16 @@ interface sequencesData{
     length: Number,
     orig_description: string,
     orig_id: string,
-    sequence: string,
+    nt: string,
     topology: string,
     type: string
+    simple_id: string
+}
+
+interface sample{
+    metadata: metaData,
+    contig: Array<contig>,
+    name: string
 }
 
 interface metaData{
@@ -89,23 +96,26 @@ interface metaData{
         value: string,
     }>
     "sample-name": string,
-    species: string,
-    contigs: Array<contig>
+    species: string
 }
 
 interface contig {
+    run_id: string,
     plasmid: string
-    contig: string
-    "contig start": string
-    "contig end": string
-    "contig length": string
-    "coverage[%]": string
-    "identity[%]": string
-    "alignment length": string
+    contig_id: string
+    contig_start: string
+    contig_end: string
+    contig_hit_length: string
+    contig_full_length: string
+    coverage: string
+    per_identity: string
+    num_identity: string
     strand: string
-    "plasmid start": string
-    "plasmid end": string
-    "plasmid length": string
+    plasmid_start: string
+    plasmid_end: string
+    plasmid_len: string
+    evalue: string
+    bitscore: string
 }
 
 

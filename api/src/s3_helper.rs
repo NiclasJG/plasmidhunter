@@ -24,7 +24,7 @@ impl S3Handler {
 
     pub async fn presigned_get_url(&self, job_id: String) -> Result<String, Box<dyn Error>> {
         let expires_in = Duration::from_secs(600000); // max 7 days (a little bit more than 600000)
-        let key = format!("jobs/{job_id}/result/result.json").to_string();
+        let key = format!("jobs/{job_id}/result/final_result.json").to_string();
 
         let presigned_request = &self.client
             .get_object()
@@ -38,7 +38,7 @@ impl S3Handler {
 
     pub async fn presigned_post_url(&self, job_id: String ) -> Result<String, Box<dyn Error>> {
         let expires_in = Duration::from_secs(600000); // max 7 days (a little bit more than 600000)
-        let key = format!("jobs/{job_id}/input/plasmid.fasta").to_string();
+        let key = format!("jobs/{job_id}/inputs/plasmid.fasta").to_string();
 
         let presigned_request = &self.client
             .put_object()

@@ -25,10 +25,10 @@ impl ArgoClient {
     pub async fn start_workflow(&self, jobid: &String, name: &String, secret: &String) -> Result<WorkflowStartData> {
         
         let jobid_param = format!("jobid={jobid}");
-        let name_param = format!("parameter={name}");
+        // let name_param = format!("parameter={name}");
         let secret_label = format!("jobsecret={secret}");
 
-        let parameters_list = Vec::from([name_param, jobid_param]);
+        let parameters_list = Vec::from([jobid_param]);
 
         let submit_options = SubmitOptions{
             parameters: parameters_list,
@@ -38,7 +38,7 @@ impl ArgoClient {
         let json_data = WorkflowInit{
             namespace: self.namespace.to_string(),
             resourceKind: "WorkflowTemplate".to_string(),
-            resourceName: "testworkflow".to_string(),
+            resourceName: "plasmidhunter-0.4.0".to_string(),
             submitOptions: submit_options,
         };
 
