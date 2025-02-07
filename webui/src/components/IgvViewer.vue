@@ -89,15 +89,15 @@ function createTracks(annotation, results, chromosome) {
             color: 'rgb(100,0,0)',
         })
     })
-    console.log(chromosome)
+    //console.log(chromosome)
     tracksArray.push(annotationTrack)
-    console.log(tracksArray)
+    //console.log(tracksArray)
     try {
         results.forEach((element) => {
             // console.log(element)
             const features = createFeatures(element.contig, chromosome)
             tracksArray.push({
-                name: element.accession,
+                name: element.metadata.accession,
                 type: 'annotation',
                 displayMode: 'expanded',
                 features: features,
@@ -113,16 +113,30 @@ function createTracks(annotation, results, chromosome) {
 function createFeatures(contigs, chromosome) {
     const features = []
     // console.log(contigs)
+    let rgb_value = random_color()
+    console.log(rgb_value)
     contigs.forEach((element) => {
         features.push({
             //chr must be same named as shown right from igv symbol in browser
             chr: chromosome,
+            name: element.contig_id,
             start: element.plasmid_start,
             end: element.plasmid_end,
-            color: 'rgb(200,0,0)',
+            color: rgb_value,
             row: 0,
         })
     })
+
+    function random_color() {
+        const r = Math.floor(Math.random() * 200)
+        const g = Math.floor(Math.random() * 150)
+        const b = Math.floor(Math.random() * 150)
+
+        var rgb = `rgb(${r},${g},${b})`
+
+        return rgb
+    }
+
     return features
 }
 </script>

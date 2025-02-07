@@ -115,19 +115,19 @@ const loaded = ref(false)
 
 const fetchData = ref<resultData>()
 
-// await fetch('http://localhost:5173/result.json')
-//     .then((response) => response.json())
-//     .then((data) => (fetchData.value = data))
-//     .catch((error) => console.log(error))
-// loaded.value = true
+await fetch('http://localhost:5173/final_result.json')
+    .then((response) => response.json())
+    .then((data) => (fetchData.value = data))
+    .catch((error) => console.log(error))
+loaded.value = true
 
-onMounted(async () => {
-    let job = getSingleJob(route.params.id.toLocaleString())
-    // console.log(job)
-    fetchData.value = await getJobResult(job)
-    loaded.value = true
-    // console.log(fetchData.value)
-})
+// onMounted(async () => {
+//     let job = getSingleJob(route.params.id.toLocaleString())
+//     // console.log(job)
+//     fetchData.value = await getJobResult(job)
+//     loaded.value = true
+//     // console.log(fetchData.value)
+// })
 
 // console.log(new Date('Oct-13-2010'))
 
