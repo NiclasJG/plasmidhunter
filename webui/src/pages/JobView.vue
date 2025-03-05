@@ -52,6 +52,29 @@
                                     <!-- sample-metadata: "geographic location (country and/or sea,region)" -->
                                 </button>
                             </td>
+                            <td
+                                v-else-if="
+                                    item.metadata['sample-metadata'].find(
+                                        (o) => o.key === 'geographic location (country and/or sea,region)',
+                                    )
+                                "
+                            >
+                                <button
+                                    @click="
+                                        MapRef.centerMarker(
+                                            fetchData.hits[index].metadata.latitude,
+                                            fetchData.hits[index].metadata.longitude,
+                                        )
+                                    "
+                                >
+                                    {{
+                                        item.metadata['sample-metadata'].find(
+                                            (o) => o.key === 'geographic location (country and/or sea,region)',
+                                        ).value
+                                    }}
+                                    <!-- sample-metadata: "geographic location (country and/or sea,region)" -->
+                                </button>
+                            </td>
                             <td v-else>
                                 <button
                                     @click="
@@ -105,7 +128,7 @@ import histogramcomp from '@/components/HistogramComponent.vue'
 
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { resultData } from '@/helpers/ResultInterface'
+import { resultData, metaData } from '@/helpers/ResultInterface'
 import { getJobResult } from '@/helpers/fetch_helper'
 import { getSingleJob } from '@/helpers/storagehelper'
 
@@ -115,25 +138,38 @@ const loaded = ref(false)
 
 const fetchData = ref<resultData>()
 
-await fetch('http://localhost:5173/final_result.json')
-    .then((response) => response.json())
-    .then((data) => (fetchData.value = data))
-    .catch((error) => console.log(error))
-loaded.value = true
-
-// onMounted(async () => {
-//     let job = getSingleJob(route.params.id.toLocaleString())
-//     // console.log(job)
-//     fetchData.value = await getJobResult(job)
-//     loaded.value = true
-//     // console.log(fetchData.value)
-// })
-
-// console.log(new Date('Oct-13-2010'))
-
+// await fetch('http://localhost:5173/final_result.json')
+//     .then((response) => response.json())
+//     .then((data) => (fetchData.value = data))
+//     .catch((error) => console.log(error))
+// loaded.value = true
 // fetchData.value.hits.sort((a, b) => {
-//     return Number(new Date(a['collection-date'])) - Number(new Date(b['collection-date']))
+//     return Number(new Date(b.metadata['collection-date'])) - Number(new Date(a.metadata['collection-date']))
 // })
+
+onMounted(async () => {
+    let job = getSingleJob(route.params.id.toLocaleString())
+    // console.log(job)
+    fetchData.value = await getJobResult(job)
+    // fetchData.value.hits.forEach((element) => {
+    //     if (element.metadata == null) {
+    //         Object.keys(metaData).forEach((key) => {})
+    //     }
+    // })
+    // if (fetchData.value.hits.metadata == null) {
+    // }
+    loaded.value = true
+    // console.log(fetchData.value)
+    // if (fetchData.value != null) {
+    //     sort_after_date()
+    // }
+})
+
+function sort_after_date() {
+    fetchData.value.hits.sort((a, b) => {
+        return Number(new Date(b.metadata['collection-date'])) - Number(new Date(a.metadata['collection-date']))
+    })
+}
 </script>
 
 <style></style>

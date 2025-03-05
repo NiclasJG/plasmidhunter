@@ -37,13 +37,16 @@ impl StateHandler{
         
 
         let job_list = self.argo_client.get_workflows().await.unwrap();
+        // let Ok(job_list) = self.argo_client.get_workflows().await else{
+        //     return ;
+        // };
         let mut job_state_list = self.job_state.write().await;
         
 
         'outer: for job in job_list.items {
             // Option für bei variablen
             let mut jobid = Uuid::new_v4();
-            let mut name = String::new();
+            let mut name: String = String::new();
             for param in job.spec.arguments.parameters {
                 if param.name == "jobid" {
                     // crashes if value cant be parsed
@@ -53,7 +56,7 @@ impl StateHandler{
                     }; 
                     jobid = job;
                 } 
-                if param.name == "parameter" {
+                if param.name == "plasmid_name" {
                     name = String::from(param.value)
                 }
             }

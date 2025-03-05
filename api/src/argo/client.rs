@@ -1,5 +1,7 @@
-use anyhow::{Ok, Result};
+use std::collections::HashMap;
 
+use anyhow::{Ok, Result};
+use serde_json::json;
 use reqwest::Client;
 
 use crate::argo::urls as urls;
@@ -27,8 +29,9 @@ impl ArgoClient {
         let jobid_param = format!("jobid={jobid}");
         // let name_param = format!("parameter={name}");
         let secret_label = format!("jobsecret={secret}");
-
-        let parameters_list = Vec::from([jobid_param]);
+        let plasmid_name_param = format!("plasmid_name={name}");
+  
+        let parameters_list = Vec::from([jobid_param,plasmid_name_param]);
 
         let submit_options = SubmitOptions{
             parameters: parameters_list,
@@ -38,7 +41,7 @@ impl ArgoClient {
         let json_data = WorkflowInit{
             namespace: self.namespace.to_string(),
             resourceKind: "WorkflowTemplate".to_string(),
-            resourceName: "plasmidhunter-0.4.0".to_string(),
+            resourceName: "plasmidhunter-0.4.1".to_string(),
             submitOptions: submit_options,
         };
 
@@ -66,7 +69,7 @@ impl ArgoClient {
                                     .await?
                                     .json::<WorkflowsList>()
                                     .await?;
-                                    
+        // println!("{:?}",response);
         Ok(response)
     }
 

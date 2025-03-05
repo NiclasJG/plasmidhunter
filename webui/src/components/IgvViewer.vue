@@ -17,7 +17,6 @@ const props = defineProps<{
 const root = ref(null)
 
 let chrom: String
-// let chrom: String = 'NC_002119.1'
 
 // Extract chromosome name from plasmid name
 if (typeof props.data !== 'undefined') {
@@ -27,7 +26,6 @@ if (typeof props.data !== 'undefined') {
 const options = {
     // genome: chrom,
     reference: {
-        //id: 'test234', //not necessary
         fastaURL: createFastaUrl(),
         indexed: false,
         // Add error function with empty tracks
@@ -62,7 +60,7 @@ function refreshIgv() {
 }
 
 function createFastaUrl() {
-    //Load Plasmid and create URL
+    //Load Plasmid from annotation data and create URL
     const plasmid_fasta =
         '>' + props.data.annotation.sequences[0].orig_description + '\n' + props.data.annotation.sequences[0].nt
     const fastablob = new Blob([plasmid_fasta], { type: 'text/plain' })
@@ -71,11 +69,10 @@ function createFastaUrl() {
 }
 
 // Create Tracks and features out of results
-function createTracks(annotation, results, chromosome) {
+function createTracks(annotation, samples, chromosome) {
     const tracksArray = []
-
+    // console.log(samples)
     const annotationTrack = {
-        // name: 'Annotation',
         type: 'annotation',
         features: [],
     }
@@ -86,18 +83,18 @@ function createTracks(annotation, results, chromosome) {
             name: e.product,
             start: e.start,
             end: e.stop,
+            strand: e.strand,
             color: 'rgb(100,0,0)',
         })
     })
-    //console.log(chromosome)
+
     tracksArray.push(annotationTrack)
-    //console.log(tracksArray)
+
     try {
-        results.forEach((element) => {
-            // console.log(element)
-            const features = createFeatures(element.contig, chromosome)
+        samples.forEach((sample) => {
+            const features = createFeatures(sample.runs, chromosome)
             tracksArray.push({
-                name: element.metadata.accession,
+                name: sample.metadata.accession,
                 type: 'annotation',
                 displayMode: 'expanded',
                 features: features,
@@ -110,21 +107,38 @@ function createTracks(annotation, results, chromosome) {
     return tracksArray
 }
 
-function createFeatures(contigs, chromosome) {
+function createFeatures(runs, chromosome) {
     const features = []
-    // console.log(contigs)
     let rgb_value = random_color()
-    console.log(rgb_value)
-    contigs.forEach((element) => {
-        features.push({
-            //chr must be same named as shown right from igv symbol in browser
-            chr: chromosome,
-            name: element.contig_id,
-            start: element.plasmid_start,
-            end: element.plasmid_end,
-            color: rgb_value,
-            row: 0,
+    console.log(runs)
+    runs.forEach((run) => {
+        run.contigs.forEach((contig) => {
+            let contig_id = contig.contig_id
+
+            contig.alignments.forEach((alignment) => {
+                features.push({
+                    //chr must be same named as shown right from igv symbol in browser
+                    chr: chromosome,
+                    name: contig_id,
+                    start: alignment.plasmid_start,
+                    end: alignment.plasmid_end,
+                    color: rgb_value,
+                    strand: alignment.strand,
+                    row: 0,
+                })
+            })
         })
+
+        // features.push({
+        //     //chr must be same named as shown right from igv symbol in browser
+        //     chr: chromosome,
+        //     name: element.contig_id,
+        //     start: element.plasmid_start,
+        //     end: element.plasmid_end,
+        //     color: rgb_value,
+        //     strand: element.strand,
+        //     row: 0,
+        // })
     })
 
     function random_color() {

@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h1>Jobs</h1>
+    <div class="container-fluid text-center">
+        <div><h1>Jobs</h1></div>
         <table class="table" v-if="loaded">
             <thead>
                 <tr>
@@ -60,28 +60,4 @@ function updateJobList() {
         loaded.value = true
     }, 20000)
 }
-// loaded.value = true
-
-// console.log(jobs)
-// function test() {
-//     console.log(getJobs())
-// }
-
-// const jobs = [
-//     {
-//         jobID: 1,
-//         jobName: 'test1',
-//         jobKey: 1,
-//     },
-//     {
-//         jobID: 2,
-//         jobName: 'test2',
-//         jobKey: 2,
-//     },
-//     {
-//         jobID: 3,
-//         jobName: 'test3',
-//         jobKey: 3,
-//     },
-// ]
 </script>

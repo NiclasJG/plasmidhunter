@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 use chrono::Utc;
+use serde_json::Value;
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct WorkflowInit {

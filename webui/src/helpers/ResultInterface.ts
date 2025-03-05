@@ -3,14 +3,13 @@ export interface resultData{
     hits: Array<sample>
 }
 
-
+// All data received from bakta (annotation)
 interface annotationInterface{
     features: Array<featureData>,
     genome: genomeData,
     run: runData,
     sequences: Array<sequencesData>,
 }
-
 
 interface featureData{
     aa: string,
@@ -69,13 +68,14 @@ interface sequencesData{
     simple_id: string
 }
 
+// All data received from metadata and blastn output (contigs)
 interface sample{
     metadata: metaData,
-    contig: Array<contig>,
+    runs: Array<run>,
     name: string
 }
 
-interface metaData{
+export interface metaData{
     accession: string,
     "analysis-completed": string,
     biosample: string,
@@ -99,44 +99,31 @@ interface metaData{
     species: string
 }
 
-interface contig {
+interface run {
     run_id: string,
-    plasmid: string
+    plasmid_len: number,
+    total_identity: string,
+    total_coverage: string,
+    contigs: Array<contig>
+}
+
+interface contig {
     contig_id: string
-    contig_start: string
-    contig_end: string
-    contig_hit_length: string
-    contig_full_length: string
-    coverage: string
-    per_identity: string
-    num_identity: string
-    strand: string
+    contig_len: string
+    plasmid_coverage: string
+    contig_coverage: string
+    weighted_identity: string
+    alignments: Array<alignment>
+}
+
+interface alignment {
     plasmid_start: string
     plasmid_end: string
-    plasmid_len: string
+    contig_start: string
+    contig_end: string
+    alignment_len: string
+    strand: string
+    perc_identity: string
     evalue: string
     bitscore: string
 }
-
-
-
-/* 
- export interface resultData {
-        plasmid_name: string
-        plasmid_seq: string
-        hits: Array<{
-            dataset: string
-            geolocation: {
-                location: string
-                longitude: string
-                latitude: string
-            }
-            seqMethod: string
-            sampleOrigin: string
-            collectionDate: string
-            biosample: string
-            mgnifySample: string
-            contigs: Array<contig>
-        }>
-    } */
-    

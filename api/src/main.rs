@@ -46,6 +46,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .route("/api/v1/job/delete", post(api_handler::delete_job))
         .with_state(plasmid_hunter_model)
         .layer(CorsLayer::very_permissive())
+        //evtl. weglassen
         .layer(TraceLayer::new_for_http()
             .on_response(())
             .on_body_chunk(())
