@@ -20,7 +20,7 @@
                     type="file"
                     id="formFile"
                     @change="uploadFile"
-                    accept=".fas, .fna, .fasta, .fna.gz, .fas.gz, .fasta.gz"
+                    accept=".fas, .fna, .fasta"
                 />
             </div>
             <div class="col align-self-right">
