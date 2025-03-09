@@ -48,11 +48,11 @@ function setInitialMarker() {
     if (typeof props.data !== 'undefined') {
         props.data.hits.forEach((element) => {
             // console.log(element.geolocation.location)
+            const accession_string = `Accession: ${element.metadata.accession}`
             try {
-                var marker = L.marker([
-                    parseFloat(element.metadata.latitude),
-                    parseFloat(element.metadata.longitude),
-                ]).addTo(map.value)
+                var marker = L.marker([parseFloat(element.metadata.latitude), parseFloat(element.metadata.longitude)])
+                    .addTo(map.value)
+                    .bindPopup(accession_string)
             } catch {
                 console.log('Location not available or found.')
             }

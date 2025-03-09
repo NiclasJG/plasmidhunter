@@ -30,6 +30,7 @@ const options = {
         indexed: false,
         // Add error function with empty tracks
         tracks: createTracks(props.data.annotation, props.data.hits, chrom),
+
         wholeGenomeView: false,
     },
     loadDefaultGenomes: false,
@@ -47,17 +48,52 @@ function setupIgv(options) {
     igv.createBrowser(root.value, options).then(function (browser) {
         console.log('Browser ready')
         igv.browser = browser
+        costum_popup()
     })
     console.log(chrom)
 }
 
-// Update IGV-Viewer
-function refreshIgv() {
-    const newgenome = {
-        genome: 'hg19',
-    }
-    igv.browser.loadGenome(newgenome)
+function costum_popup() {
+    igv.browser.on('trackclick', (track, popupData) => {
+        const popoverData = popupData
+        let markup = '<table class="styled-table">'
+
+        // Don't show a pop-over when there's no data.
+        if (!popoverData || !popoverData.length) {
+            return false
+        }
+
+        for (const nameValue of popoverData) {
+            if (nameValue.name) {
+                // var value = nameValue.name.toLowerCase() === 'name' ? : nameValue.value
+                // ? '<a href="https://uswest.ensembl.org/Multi/Search/Results?q=' +
+                //   nameValue.value +
+                //   '">' +
+                //   nameValue.value +
+                //   '</a>'
+                // : nameValue.value
+
+                markup += '<tr><td>' + nameValue.name + '</td><td>' + nameValue.value + '</td></tr>'
+            } else {
+                // not a name/value pair
+                markup += '<tr><td>' + nameValue.toString() + '</td></tr>'
+            }
+        }
+
+        markup += '</table>'
+
+        // By returning a string from the trackclick handler we're asking IGV to use our custom HTML in its pop-over.
+        return markup
+    })
 }
+
+// // Update IGV-Viewer
+// function refreshIgv() {
+//     const newgenome = {
+//         genome: 'hg19',
+//     }
+//     igv.browser.loadGenome(newgenome)
+// }
 
 function createFastaUrl() {
     //Load Plasmid from annotation data and create URL
@@ -110,7 +146,7 @@ function createTracks(annotation, samples, chromosome) {
 function createFeatures(runs, chromosome) {
     const features = []
     let rgb_value = random_color()
-    console.log(runs)
+    // console.log(runs)
     runs.forEach((run) => {
         run.contigs.forEach((contig) => {
             let contig_id = contig.contig_id
@@ -125,6 +161,9 @@ function createFeatures(runs, chromosome) {
                     color: rgb_value,
                     strand: alignment.strand,
                     row: 0,
+                    'Contig coverage (%)': contig.contig_coverage,
+                    'Plasmid coverage (%)': contig.plasmid_coverage,
+                    'Contig Length (b)': contig.contig_len,
                 })
             })
         })
