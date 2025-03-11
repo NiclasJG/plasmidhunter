@@ -88,8 +88,13 @@
                                     <!-- sample-metadata: "geographic location (country and/or sea,region)" -->
                                 </button>
                             </td>
-                            <td>{{ item.metadata['collection-date'] }}</td>
-
+                            <td v-if="item.metadata['collection-date'] !== null">
+                                {{ item.metadata['collection-date'] }}
+                            </td>
+                            <td v-else-if="item.metadata['sample-metadata'].find((o) => o.key === 'collection date')">
+                                {{ item.metadata['sample-metadata'].find((o) => o.key === 'collection date').value }}
+                            </td>
+                            <td v-else>Not available</td>
                             <td>{{ item.metadata['sample-desc'] }}</td>
                             <!--       <td>{{ item.seqMethod }}</td> -->
                             <td>{{ item.metadata['environment-biome'] }}</td>

@@ -40,7 +40,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     println!("listening on {}", listener.local_addr().unwrap());
 
-    let app = Router::new().route("/", post(api_handler::create_job))
+    let app = Router::new().route("/api/v1/job/submit", post(api_handler::create_job))
         .route("/api/v1/job/list", post(api_handler::get_job_list))
         .route("/api/v1/job/result", post(api_handler::get_job_result))
         .route("/api/v1/job/delete", post(api_handler::delete_job))

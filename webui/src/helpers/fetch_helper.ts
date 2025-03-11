@@ -13,7 +13,7 @@ export async function postJob(plasmidName:string, plasmidSequenz:string) {
         body: JSON.stringify({ plasmid_name: plasmidName, dna_sequenz: plasmidSequenz }),
     }
 
-    await fetch('http://127.0.0.1:1239/', requestCreateJob)
+    await fetch('http://127.0.0.1:1239/api/v1/job/submit', requestCreateJob)
         .then((response) => response.json())
         .then((data) => (jobResponse = data))
         .catch((error) => {
