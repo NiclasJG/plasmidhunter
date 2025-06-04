@@ -23,3 +23,8 @@ export interface resultResponse {
     name: string,
     data: string
 }
+
+export interface configFile {
+    api_url: string,
+    key: string
+}

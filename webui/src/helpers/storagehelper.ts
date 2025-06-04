@@ -18,7 +18,8 @@ export function getJobs() {
 
 export function getSingleJob(jobid: String) {
     let jobs = getJobs()
-    let job:job 
+    let job : job 
+    
     jobs.forEach(element => {
         if (element.id === jobid) {
             job = element
